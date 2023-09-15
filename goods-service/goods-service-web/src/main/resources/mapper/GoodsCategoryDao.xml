@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods.service.web.dao.GoodsCategoryDao">
+
+    <resultMap type="goods.service.web.entity.GoodsCategory" id="GoodsCategoryMap">
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="categoryLevel" column="category_level" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
+        <result property="categoryRank" column="category_rank" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        category_id
+        , category_level, parent_id, category_name, category_rank, is_deleted, create_time, create_user, update_time, update_user
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="GoodsCategoryMap">
+        select category_id,
+               category_level,
+               parent_id,
+               category_name,
+               category_rank,
+               is_deleted,
+               create_time,
+               create_user,
+               update_time,
+               update_user
+        from tb_goods_category
+        where category_id = #{categoryId}
+    </select>
+
+
+    <!--查询指定行数据-->
+    <select id="queryAllGoodsCategoriesByLimit" parameterType="Map" resultMap="GoodsCategoryMap">
+        select
+        category_id, category_level, parent_id, category_name, category_rank, is_deleted, create_time, create_user,
+        update_time, update_user
+        from tb_goods_category
+        <where>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="categoryLevel != null">
+                and category_level = #{categoryLevel}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by category_rank desc
+        <if test="start!=null and limit!=null">
+            limit #{start}, #{limit}
+        </if>
+    </select>
+
+    <!--统计总行数-->
+    <select id="countGoodsCategories" parameterType="Map" resultType="int">
+        select count(1)
+        from tb_goods_category
+        <where>
+            <if test="categoryLevel != null">
+                and category_level = #{categoryLevel}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+            and is_deleted = 0
+        </where>
+    </select>
+
+    <select id="selectByLevelAndParentIdsAndNumber" resultMap="GoodsCategoryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_goods_category where parent_id in
+        <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
+            #{parentId, jdbcType=BIGINT}
+        </foreach>
+        and category_level = #{categoryLevel, jdbcType=TINYINT}
+        and is_deleted = 0
+        order by category_rank desc
+        <if test="number>0">
+            limit #{number}
+        </if>
+    </select>
+    <select id="selectByLevelAndName" resultMap="GoodsCategoryMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_goods_category where
+        category_level = #{categoryLevel, jdbcType=TINYINT}
+        and category_name = #{categoryName, jdbcType=VARCHAR}
+        and is_deleted = 0 limit 1
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="categoryId" useGeneratedKeys="true">
+        insert into tb_goods_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="categoryLevel != null">
+                category_level,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="categoryName != null">
+                category_name,
+            </if>
+            <if test="categoryRank != null">
+                category_rank,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryLevel != null">
+                #{categoryLevel,jdbcType=TINYINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryName != null">
+                #{categoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryRank != null">
+                #{categoryRank,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" keyProperty="categoryId" useGeneratedKeys="true">
+        insert into tb_goods_category(category_level, parent_id, category_name, category_rank, is_deleted, create_time,
+        create_user, update_time, update_user)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.categoryLevel}, #{entity.parentId}, #{entity.categoryName}, #{entity.categoryRank},
+            #{entity.isDeleted}, #{entity.createTime}, #{entity.createUser}, #{entity.updateTime}, #{entity.updateUser})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="categoryId" useGeneratedKeys="true">
+        insert into tb_goods_category(category_level, parent_id, category_name, category_rank, is_deleted, create_time,
+        create_user, update_time, update_user)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.categoryLevel}, #{entity.parentId}, #{entity.categoryName}, #{entity.categoryRank},
+            #{entity.isDeleted}, #{entity.createTime}, #{entity.createUser}, #{entity.updateTime}, #{entity.updateUser})
+        </foreach>
+        on duplicate key update
+        category_level = values(category_level),
+        parent_id = values(parent_id),
+        category_name = values(category_name),
+        category_rank = values(category_rank),
+        is_deleted = values(is_deleted),
+        create_time = values(create_time),
+        create_user = values(create_user),
+        update_time = values(update_time),
+        update_user = values(update_user)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tb_goods_category
+        <set>
+            <if test="categoryLevel != null">
+                category_level = #{categoryLevel},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                category_name = #{categoryName},
+            </if>
+            <if test="categoryRank != null">
+                category_rank = #{categoryRank},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where category_id = #{categoryId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from tb_goods_category
+        where category_id = #{categoryId}
+    </delete>
+
+    <update id="deleteBatch">
+        update tb_goods_category set is_deleted = 1 where category_id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>
+

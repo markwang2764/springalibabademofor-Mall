@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods.service.web.dao.GoodsInfoDao">
+
+    <resultMap type="goods.service.web.entity.GoodsInfo" id="GoodsInfoMap">
+        <result property="goodsId" column="goods_id" jdbcType="VARCHAR"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="goodsIntro" column="goods_intro" jdbcType="VARCHAR"/>
+        <result property="goodsCategoryId" column="goods_category_id" jdbcType="INTEGER"/>
+        <result property="goodsCoverImg" column="goods_cover_img" jdbcType="VARCHAR"/>
+        <result property="goodsCarousel" column="goods_carousel" jdbcType="VARCHAR"/>
+        <result property="originalPrice" column="original_price" jdbcType="INTEGER"/>
+        <result property="sellingPrice" column="selling_price" jdbcType="INTEGER"/>
+        <result property="stockNum" column="stock_num" jdbcType="VARCHAR"/>
+        <result property="tag" column="tag" jdbcType="VARCHAR"/>
+        <result property="goodsSellStatus" column="goods_sell_status" jdbcType="INTEGER"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBS" type="goods.service.web.entity.GoodsInfo" extends="GoodsInfoMap">
+        <result column="goods_detail_content" jdbcType="LONGVARCHAR" property="goodsDetailContent"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        goods_id
+        ,
+               goods_name,
+               goods_intro,
+               goods_category_id,
+               goods_cover_img,
+               goods_carousel,
+               original_price,
+               selling_price,
+               stock_num,
+               tag,
+               goods_sell_status,
+               create_user,
+               create_time,
+               update_user,
+               update_time
+    </sql>
+    <sql id="Blob_Column_List">
+        goods_detail_content
+    </sql>
+
+    <select id="queryById" resultMap="ResultMapWithBLOBS">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from tb_goods_info
+        where goods_id = #{goodsId, jdbcType=BIGINT}
+    </select>
+    <select id="queryByCategoryIdAndName" resultMap="ResultMapWithBLOBS">
+        select
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        from tb_goods_info
+        where goods_name = #{goodsName, jdbcType=VARCHAR} and goods_category_id = #{goodsCategoryId, jdbcType=BIGINT}
+    </select>
+
+    <select id="queryAllByLimit" parameterType="Map" resultMap="GoodsInfoMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_goods_info
+        <where>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name LIKE "%"#{goodsName,jdbcType=VARCHAR}"%"
+                -- CONCAT 报错？
+                -- and goods_name like CONCAT('%', '#{goodsName}', '%')
+            </if>
+            <if test="goodsIntro != null and goodsIntro != ''">
+                and goods_intro = #{goodsIntro}
+            </if>
+            <if test="goodsCategoryId != null">
+                and goods_category_id = #{goodsCategoryId}
+            </if>
+            <if test="goodsCoverImg != null and goodsCoverImg != ''">
+                and goods_cover_img = #{goodsCoverImg}
+            </if>
+            <if test="goodsCarousel != null and goodsCarousel != ''">
+                and goods_carousel = #{goodsCarousel}
+            </if>
+            <if test="goodsDetailContent != null and goodsDetailContent != ''">
+                and goods_detail_content = #{goodsDetailContent}
+            </if>
+            <if test="originalPrice != null">
+                and original_price = #{originalPrice}
+            </if>
+            <if test="sellingPrice != null">
+                and selling_price = #{sellingPrice}
+            </if>
+            <if test="stockNum != null">
+                and stock_num = #{stockNum}
+            </if>
+            <if test="tag != null and tag != ''">
+                and tag = #{tag}
+            </if>
+            <if test="goodsSellStatus != null">
+                and goods_sell_status = #{goodsSellStatus}
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateUser != null">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+        order by goods_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(1)
+        from tb_goods_info
+        <where>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                and goods_name like CONCAT('%', '#{goodsName}', '%')
+            </if>
+            <if test="goodsIntro != null and goodsIntro != ''">
+                and goods_intro = #{goodsIntro}
+            </if>
+            <if test="goodsCategoryId != null">
+                and goods_category_id = #{goodsCategoryId}
+            </if>
+            <if test="goodsCoverImg != null and goodsCoverImg != ''">
+                and goods_cover_img = #{goodsCoverImg}
+            </if>
+            <if test="goodsCarousel != null and goodsCarousel != ''">
+                and goods_carousel = #{goodsCarousel}
+            </if>
+            <if test="goodsDetailContent != null and goodsDetailContent != ''">
+                and goods_detail_content = #{goodsDetailContent}
+            </if>
+            <if test="originalPrice != null">
+                and original_price = #{originalPrice}
+            </if>
+            <if test="sellingPrice != null">
+                and selling_price = #{sellingPrice}
+            </if>
+            <if test="stockNum != null">
+                and stock_num = #{stockNum}
+            </if>
+            <if test="tag != null and tag != ''">
+                and tag = #{tag}
+            </if>
+            <if test="goodsSellStatus != null">
+                and goods_sell_status = #{goodsSellStatus}
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateUser != null">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into tb_goods_info(goods_name, goods_intro, goods_category_id, goods_cover_img, goods_carousel,
+                                  goods_detail_content, original_price, selling_price, stock_num, tag,
+                                  goods_sell_status, create_user, create_time, update_user, update_time)
+        values (#{goodsName}, #{goodsIntro}, #{goodsCategoryId}, #{goodsCoverImg}, #{goodsCarousel},
+                #{goodsDetailContent}, #{originalPrice}, #{sellingPrice}, #{stockNum}, #{tag}, #{goodsSellStatus},
+                #{createUser}, #{createTime}, #{updateUser}, #{updateTime})
+    </insert>
+
+    <update id="batchUpdateSellStatus">
+        update tb_goods_info
+        set goods_sell_status=#{sellStatus},
+        update_time=now()
+        where goods_id in
+        <foreach collection="orderIds" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="insertBatch" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into tb_goods_info(goods_name, goods_intro, goods_category_id, goods_cover_img, goods_carousel,
+        goods_detail_content, original_price, selling_price, stock_num, tag, goods_sell_status, create_user,
+        create_time, update_user, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.goodsName}, #{entity.goodsIntro}, #{entity.goodsCategoryId}, #{entity.goodsCoverImg},
+            #{entity.goodsCarousel}, #{entity.goodsDetailContent}, #{entity.originalPrice}, #{entity.sellingPrice},
+            #{entity.stockNum}, #{entity.tag}, #{entity.goodsSellStatus}, #{entity.createUser}, #{entity.createTime},
+            #{entity.updateUser}, #{entity.updateTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into tb_goods_info(goods_name, goods_intro, goods_category_id, goods_cover_img, goods_carousel,
+        goods_detail_content, original_price, selling_price, stock_num, tag, goods_sell_status, create_user,
+        create_time, update_user, update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.goodsName}, #{entity.goodsIntro}, #{entity.goodsCategoryId}, #{entity.goodsCoverImg},
+            #{entity.goodsCarousel}, #{entity.goodsDetailContent}, #{entity.originalPrice}, #{entity.sellingPrice},
+            #{entity.stockNum}, #{entity.tag}, #{entity.goodsSellStatus}, #{entity.createUser}, #{entity.createTime},
+            #{entity.updateUser}, #{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        goods_name = values(goods_name),
+        goods_intro = values(goods_intro),
+        goods_category_id = values(goods_category_id),
+        goods_cover_img = values(goods_cover_img),
+        goods_carousel = values(goods_carousel),
+        goods_detail_content = values(goods_detail_content),
+        original_price = values(original_price),
+        selling_price = values(selling_price),
+        stock_num = values(stock_num),
+        tag = values(tag),
+        goods_sell_status = values(goods_sell_status),
+        create_user = values(create_user),
+        create_time = values(create_time),
+        update_user = values(update_user),
+        update_time = values(update_time)
+    </insert>
+
+    <update id="update">
+        update tb_goods_info
+        <set>
+            <if test="goodsName != null and goodsName != ''">
+                goods_name = #{goodsName},
+            </if>
+            <if test="goodsIntro != null and goodsIntro != ''">
+                goods_intro = #{goodsIntro},
+            </if>
+            <if test="goodsCategoryId != null">
+                goods_category_id = #{goodsCategoryId},
+            </if>
+            <if test="goodsCoverImg != null and goodsCoverImg != ''">
+                goods_cover_img = #{goodsCoverImg},
+            </if>
+            <if test="goodsCarousel != null and goodsCarousel != ''">
+                goods_carousel = #{goodsCarousel},
+            </if>
+            <if test="goodsDetailContent != null and goodsDetailContent != ''">
+                goods_detail_content = #{goodsDetailContent},
+            </if>
+            <if test="originalPrice != null">
+                original_price = #{originalPrice},
+            </if>
+            <if test="sellingPrice != null">
+                selling_price = #{sellingPrice},
+            </if>
+            <if test="stockNum != null">
+                stock_num = #{stockNum},
+            </if>
+            <if test="tag != null and tag != ''">
+                tag = #{tag},
+            </if>
+            <if test="goodsSellStatus != null">
+                goods_sell_status = #{goodsSellStatus},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where goods_id = #{goodsId}
+    </update>
+
+    <delete id="deleteById">
+        delete
+        from tb_goods_info
+        where goods_id = #{goodsId}
+    </delete>
+
+</mapper>
+

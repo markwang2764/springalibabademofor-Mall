@@ -25,6 +25,7 @@
         <module>srpingcloudalibabademo-gateway</module>
         <module>goods-service</module>
         <module>goods-service/goods-service-web</module>
+        <module>recommend-service</module>
     </modules>
   <dependencyManagement>
       <dependencies>

@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -83,10 +82,10 @@ public class GoodsInfoController {
      * @return 单条数据
      */
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取单挑商品信息", notes = "根据id查询")
+    @ApiOperation(value = "获取单条商品信息", notes = "根据id查询")
     public Result<?> queryById(@PathVariable("id") Long id, @TokenToAdminUser UserAdmin userAdmin) {
         logger.info("userAdmin: {}", userAdmin.toString());
-        Map goodsInfoMap = new HashMap(8);
+        Map<String, Object> goodsInfoMap = new HashMap<>(8);
         GoodsInfo goodsInfo = goodsInfoService.queryById(id);
         if (goodsInfo == null) {
             return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
@@ -107,6 +106,17 @@ public class GoodsInfoController {
                 }
             }
         }
+        return ResultGenerator.genSuccessResult(goodsInfoMap);
+    }
+
+    /**
+     * 通过主键查询单条数据
+     *@RequestParam("goodsId")
+     */
+    @GetMapping("/goodsDetail")
+    @ApiOperation(value = "获取单条商品信息", notes = "根据id查询")
+    public Result<?> queryGoodsDetail(@RequestParam("goodsId") Long goodsId) {
+        GoodsInfo goodsInfo = goodsInfoService.queryById(goodsId);
         return ResultGenerator.genSuccessResult(goodsInfo);
     }
 

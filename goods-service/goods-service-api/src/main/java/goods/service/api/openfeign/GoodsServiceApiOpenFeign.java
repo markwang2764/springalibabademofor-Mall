@@ -1,6 +1,9 @@
 package goods.service.api.openfeign;
 
+import com.example.springcloudalibabacommon.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @program: SpringCloudAlibabaDemo
@@ -10,5 +13,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  **/
 @FeignClient(value = "goods-service", path = "/goods")
 public interface GoodsServiceApiOpenFeign {
+    @GetMapping(value = "/admin/goodsDetail")
+    Result<?> getGoodsDetail(@RequestParam(value = "goodsId") Long goodsId);
 
 }

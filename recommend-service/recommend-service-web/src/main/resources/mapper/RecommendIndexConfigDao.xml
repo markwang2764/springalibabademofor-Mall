@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="recommend.service.web.dao.RecommendIndexConfigDao">
+
+    <resultMap type="recommend.service.web.entity.RecommendIndexConfig" id="RecommendIndexConfigMap">
+        <result property="configId" column="config_id" jdbcType="INTEGER"/>
+        <result property="configName" column="config_name" jdbcType="VARCHAR"/>
+        <result property="configType" column="config_type" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="redirectUrl" column="redirect_url" jdbcType="VARCHAR"/>
+        <result property="configRank" column="config_rank" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RecommendIndexConfigMap">
+        select
+          config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user
+        from tb_recommend_index_config
+        where config_id = #{configId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RecommendIndexConfigMap">
+        select
+          config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user
+        from tb_recommend_index_config
+        <where>
+            <if test="configId != null">
+                and config_id = #{configId}
+            </if>
+            <if test="configName != null and configName != ''">
+                and config_name = #{configName}
+            </if>
+            <if test="configType != null">
+                and config_type = #{configType}
+            </if>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="redirectUrl != null and redirectUrl != ''">
+                and redirect_url = #{redirectUrl}
+            </if>
+            <if test="configRank != null">
+                and config_rank = #{configRank}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUser != null">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from tb_recommend_index_config
+        <where>
+            <if test="configId != null">
+                and config_id = #{configId}
+            </if>
+            <if test="configName != null and configName != ''">
+                and config_name = #{configName}
+            </if>
+            <if test="configType != null">
+                and config_type = #{configType}
+            </if>
+            <if test="goodsId != null">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="redirectUrl != null and redirectUrl != ''">
+                and redirect_url = #{redirectUrl}
+            </if>
+            <if test="configRank != null">
+                and config_rank = #{configRank}
+            </if>
+            <if test="isDeleted != null">
+                and is_deleted = #{isDeleted}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUser != null">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="configId" useGeneratedKeys="true">
+        insert into tb_recommend_index_config(config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user)
+        values (#{configName}, #{configType}, #{goodsId}, #{redirectUrl}, #{configRank}, #{isDeleted}, #{createTime}, #{createUser}, #{updateTime}, #{updateUser})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="configId" useGeneratedKeys="true">
+        insert into tb_recommend_index_config(config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.configName}, #{entity.configType}, #{entity.goodsId}, #{entity.redirectUrl}, #{entity.configRank}, #{entity.isDeleted}, #{entity.createTime}, #{entity.createUser}, #{entity.updateTime}, #{entity.updateUser})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="configId" useGeneratedKeys="true">
+        insert into tb_recommend_index_config(config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.configName}, #{entity.configType}, #{entity.goodsId}, #{entity.redirectUrl}, #{entity.configRank}, #{entity.isDeleted}, #{entity.createTime}, #{entity.createUser}, #{entity.updateTime}, #{entity.updateUser})
+        </foreach>
+        on duplicate key update
+        config_name = values(config_name),
+        config_type = values(config_type),
+        goods_id = values(goods_id),
+        redirect_url = values(redirect_url),
+        config_rank = values(config_rank),
+        is_deleted = values(is_deleted),
+        create_time = values(create_time),
+        create_user = values(create_user),
+        update_time = values(update_time),
+        update_user = values(update_user)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tb_recommend_index_config
+        <set>
+            <if test="configName != null and configName != ''">
+                config_name = #{configName},
+            </if>
+            <if test="configType != null">
+                config_type = #{configType},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="redirectUrl != null and redirectUrl != ''">
+                redirect_url = #{redirectUrl},
+            </if>
+            <if test="configRank != null">
+                config_rank = #{configRank},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where config_id = #{configId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tb_recommend_index_config where config_id = #{configId}
+    </delete>
+
+</mapper>
+

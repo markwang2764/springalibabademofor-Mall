@@ -17,7 +17,7 @@ import java.util.List;
  * @create: 2023-09-08 01:34
  **/
 @Configuration
-public class AdminUserWebMvcConfigurer  extends WebMvcConfigurationSupport {
+public class GoodsUserWebMvcConfigurer extends WebMvcConfigurationSupport {
     @Autowired
     private TokenToAdminUserMethodArgumentResolver tokenToAdminUserMethodArgumentResolver;
 

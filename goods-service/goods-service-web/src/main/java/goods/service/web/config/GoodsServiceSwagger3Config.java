@@ -26,7 +26,7 @@ import java.util.List;
  **/
 @Configuration
 @EnableOpenApi
-public class AdminUserSwagger3Config {
+public class GoodsServiceSwagger3Config {
     @Bean
     public Docket api(){
         return new Docket(DocumentationType.OAS_30)

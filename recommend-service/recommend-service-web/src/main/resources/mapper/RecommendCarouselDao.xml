@@ -13,6 +13,9 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
     </resultMap>
+    <sql id="Base_Column_List">
+        carousel_id, carousel_url, redirect_url, carousel_rank, is_deleted, create_time, create_user, update_time, update_user
+    </sql>
 
     <!--查询单个-->
     <select id="queryById" resultMap="RecommendCarouselMap">
@@ -20,6 +23,12 @@
           carousel_id, carousel_url, redirect_url, carousel_rank, is_deleted, create_time, create_user, update_time, update_user
         from tb_recommend_carousel
         where carousel_id = #{carouselId}
+    </select>
+    <select id="carouseList" resultMap="RecommendCarouselMap">
+        select <include refid="Base_Column_List" />
+            from tb_recommend_carousel
+            where is_deleted = 0
+            order by carousel_rank desc
     </select>
 
     <!--查询指定行数据-->

@@ -1,8 +1,8 @@
 package recommend.service.web.service;
 
 import recommend.service.web.entity.RecommendCarousel;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (RecommendCarousel)表服务接口
@@ -20,22 +20,15 @@ public interface RecommendCarouselService {
      */
     RecommendCarousel queryById(Integer carouselId);
 
-    /**
-     * 分页查询
-     *
-     * @param recommendCarousel 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
-    Page<RecommendCarousel> queryByPage(RecommendCarousel recommendCarousel, PageRequest pageRequest);
 
+    List<RecommendCarousel> list();
     /**
      * 新增数据
      *
      * @param recommendCarousel 实例对象
      * @return 实例对象
      */
-    RecommendCarousel insert(RecommendCarousel recommendCarousel);
+    String insert(RecommendCarousel recommendCarousel);
 
     /**
      * 修改数据

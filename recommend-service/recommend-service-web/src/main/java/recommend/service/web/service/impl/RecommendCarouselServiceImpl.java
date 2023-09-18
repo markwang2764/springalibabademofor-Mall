@@ -1,14 +1,13 @@
 package recommend.service.web.service.impl;
 
+import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
 import recommend.service.web.entity.RecommendCarousel;
 import recommend.service.web.dao.RecommendCarouselDao;
 import recommend.service.web.service.RecommendCarouselService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (RecommendCarousel)表服务实现类
@@ -32,17 +31,9 @@ public class RecommendCarouselServiceImpl implements RecommendCarouselService {
         return this.recommendCarouselDao.queryById(carouselId);
     }
 
-    /**
-     * 分页查询
-     *
-     * @param recommendCarousel 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
     @Override
-    public Page<RecommendCarousel> queryByPage(RecommendCarousel recommendCarousel, PageRequest pageRequest) {
-        long total = this.recommendCarouselDao.count(recommendCarousel);
-        return new PageImpl<>(this.recommendCarouselDao.queryAllByLimit(recommendCarousel, pageRequest), pageRequest, total);
+    public List<RecommendCarousel> list() {
+        return recommendCarouselDao.carouseList();
     }
 
     /**
@@ -52,9 +43,11 @@ public class RecommendCarouselServiceImpl implements RecommendCarouselService {
      * @return 实例对象
      */
     @Override
-    public RecommendCarousel insert(RecommendCarousel recommendCarousel) {
-        this.recommendCarouselDao.insert(recommendCarousel);
-        return recommendCarousel;
+    public String insert(RecommendCarousel recommendCarousel) {
+        if (recommendCarouselDao.insert(recommendCarousel) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
     }
 
     /**

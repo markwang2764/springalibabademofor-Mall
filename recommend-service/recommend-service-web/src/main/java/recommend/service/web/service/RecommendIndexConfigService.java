@@ -1,8 +1,8 @@
 package recommend.service.web.service;
 
+import com.example.springcloudalibabacommon.dto.PageQueryUtil;
+import com.example.springcloudalibabacommon.dto.PageResult;
 import recommend.service.web.entity.RecommendIndexConfig;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * (RecommendIndexConfig)表服务接口
@@ -22,12 +22,9 @@ public interface RecommendIndexConfigService {
 
     /**
      * 分页查询
-     *
-     * @param recommendIndexConfig 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<RecommendIndexConfig> queryByPage(RecommendIndexConfig recommendIndexConfig, PageRequest pageRequest);
+    PageResult<RecommendIndexConfig> queryByPage(PageQueryUtil pageQueryUtil);
 
     /**
      * 新增数据

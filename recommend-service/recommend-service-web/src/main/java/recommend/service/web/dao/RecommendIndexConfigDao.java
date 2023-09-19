@@ -1,8 +1,8 @@
 package recommend.service.web.dao;
 
+import com.example.springcloudalibabacommon.dto.PageQueryUtil;
 import recommend.service.web.entity.RecommendIndexConfig;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
@@ -20,15 +20,13 @@ public interface RecommendIndexConfigDao {
      * @return 实例对象
      */
     RecommendIndexConfig queryById(Long configId);
+    int getTotalIndexConfigs(PageQueryUtil pageQueryUtil);
 
     /**
      * 查询指定行数据
-     *
-     * @param recommendIndexConfig 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<RecommendIndexConfig> queryAllByLimit(RecommendIndexConfig recommendIndexConfig, @Param("pageable") Pageable pageable);
+    List<RecommendIndexConfig> queryAllByLimit(PageQueryUtil pageQueryUtil);
 
     /**
      * 统计总行数

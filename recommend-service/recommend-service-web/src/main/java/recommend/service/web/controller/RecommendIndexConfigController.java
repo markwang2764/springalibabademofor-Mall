@@ -1,13 +1,24 @@
 package recommend.service.web.controller;
 
+import com.example.springcloudalibabacommon.dto.PageQueryUtil;
+import com.example.springcloudalibabacommon.dto.Result;
+import com.example.springcloudalibabacommon.dto.ResultGenerator;
+import com.example.springcloudalibabacommon.enums.IndexConfigTypeEnum;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import recommend.service.web.config.annotation.TokenToAdminUser;
 import recommend.service.web.entity.RecommendIndexConfig;
+import recommend.service.web.entity.UserAdmin;
 import recommend.service.web.service.RecommendIndexConfigService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * (RecommendIndexConfig)表控制层
@@ -16,8 +27,11 @@ import javax.annotation.Resource;
  * @since 2023-09-17 23:41:50
  */
 @RestController
-@RequestMapping("recommendIndexConfig")
+@Api(value = "v1", tags = "后台管理系统首页配置模块接口")
+@RequestMapping("/indexConfig/admin")
 public class RecommendIndexConfigController {
+
+    private static final Logger logger = LoggerFactory.getLogger(RecommendIndexConfigController.class);
     /**
      * 服务对象
      */
@@ -27,13 +41,30 @@ public class RecommendIndexConfigController {
     /**
      * 分页查询
      *
-     * @param recommendIndexConfig 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    @GetMapping
-    public ResponseEntity<Page<RecommendIndexConfig>> queryByPage(RecommendIndexConfig recommendIndexConfig, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.recommendIndexConfigService.queryByPage(recommendIndexConfig, pageRequest));
+    @GetMapping("/list")
+    @ApiOperation(value = "首页配置列表", notes = "首页配置列表")
+    public Result<?> queryByPage(
+            @RequestParam(required = false) @ApiParam(value = "页码") Integer pageNumber,
+            @RequestParam(required = false) @ApiParam(value = "每条页数") Integer pageSize,
+            @RequestParam(required = false) @ApiParam(value = "1-搜索框热搜 2-搜索下拉框热搜 3-（首页）热销商品 4-（首页）新品上线 5-(首页)为你推荐") Integer configType,
+            @TokenToAdminUser UserAdmin userAdmin
+    ) {
+        logger.info("adminUser:{}", userAdmin.toString());
+        if (pageNumber == null || pageNumber < 1 || pageSize == null || pageSize < 10) {
+            return ResultGenerator.genFailResult("分页参数异常！");
+        }
+        IndexConfigTypeEnum indexConfigTypeEnum = IndexConfigTypeEnum.getIndexConfigTypeEnumByType(configType);
+        if (indexConfigTypeEnum.equals(IndexConfigTypeEnum.DEFAULT)) {
+            return ResultGenerator.genFailResult("非法参数！");
+        }
+        Map<String, Object> params = new HashMap<>(8);
+        params.put("page", pageNumber);
+        params.put("limit", pageSize);
+        params.put("configType", configType);
+        PageQueryUtil pageQueryUtil = new PageQueryUtil(params);
+        return ResultGenerator.genSuccessResult(recommendIndexConfigService.queryByPage(pageQueryUtil));
     }
 
     /**

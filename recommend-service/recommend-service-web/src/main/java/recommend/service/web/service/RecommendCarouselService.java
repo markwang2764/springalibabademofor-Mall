@@ -36,7 +36,7 @@ public interface RecommendCarouselService {
      * @param recommendCarousel 实例对象
      * @return 实例对象
      */
-    RecommendCarousel update(RecommendCarousel recommendCarousel);
+    String update(RecommendCarousel recommendCarousel);
 
     /**
      * 通过主键删除数据
@@ -45,5 +45,6 @@ public interface RecommendCarouselService {
      * @return 是否成功
      */
     boolean deleteById(Integer carouselId);
+    Boolean deleteBatch(Long[] ids);
 
 }

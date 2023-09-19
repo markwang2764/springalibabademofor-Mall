@@ -1,14 +1,14 @@
 package recommend.service.web.service.impl;
 
+import com.example.springcloudalibabacommon.dto.PageQueryUtil;
+import com.example.springcloudalibabacommon.dto.PageResult;
 import recommend.service.web.entity.RecommendIndexConfig;
 import recommend.service.web.dao.RecommendIndexConfigDao;
 import recommend.service.web.service.RecommendIndexConfigService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (RecommendIndexConfig)表服务实现类
@@ -32,17 +32,11 @@ public class RecommendIndexConfigServiceImpl implements RecommendIndexConfigServ
         return this.recommendIndexConfigDao.queryById(configId);
     }
 
-    /**
-     * 分页查询
-     *
-     * @param recommendIndexConfig 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
     @Override
-    public Page<RecommendIndexConfig> queryByPage(RecommendIndexConfig recommendIndexConfig, PageRequest pageRequest) {
-        long total = this.recommendIndexConfigDao.count(recommendIndexConfig);
-        return new PageImpl<>(this.recommendIndexConfigDao.queryAllByLimit(recommendIndexConfig, pageRequest), pageRequest, total);
+    public PageResult<RecommendIndexConfig> queryByPage(PageQueryUtil pageQueryUtil) {
+        List<RecommendIndexConfig> indexConfigs = recommendIndexConfigDao.queryAllByLimit(pageQueryUtil);
+        int total = recommendIndexConfigDao.getTotalIndexConfigs(pageQueryUtil);
+        return new PageResult<>(indexConfigs, total, pageQueryUtil.getLimit(), pageQueryUtil.getPage());
     }
 
     /**

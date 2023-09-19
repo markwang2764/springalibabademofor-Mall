@@ -57,9 +57,12 @@ public class RecommendCarouselServiceImpl implements RecommendCarouselService {
      * @return 实例对象
      */
     @Override
-    public RecommendCarousel update(RecommendCarousel recommendCarousel) {
-        this.recommendCarouselDao.update(recommendCarousel);
-        return this.queryById(recommendCarousel.getCarouselId());
+    public String update(RecommendCarousel recommendCarousel) {
+        RecommendCarousel temp = recommendCarouselDao.queryById(recommendCarousel.getCarouselId());
+        if (temp == null) {
+            return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
     }
 
     /**
@@ -71,5 +74,13 @@ public class RecommendCarouselServiceImpl implements RecommendCarouselService {
     @Override
     public boolean deleteById(Integer carouselId) {
         return this.recommendCarouselDao.deleteById(carouselId) > 0;
+    }
+
+    @Override
+    public Boolean deleteBatch(Long[] ids) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return recommendCarouselDao.deleteBatch(ids) > 0;
     }
 }

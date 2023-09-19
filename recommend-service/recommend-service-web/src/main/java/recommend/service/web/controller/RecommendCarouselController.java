@@ -1,6 +1,5 @@
 package recommend.service.web.controller;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
 import com.example.springcloudalibabacommon.dto.Result;
 import com.example.springcloudalibabacommon.dto.ResultGenerator;
 import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
@@ -10,18 +9,17 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import recommend.service.web.config.annotation.TokenToAdminUser;
+import recommend.service.web.controller.param.BatchIdParam;
 import recommend.service.web.controller.param.CarouselAddParam;
+import recommend.service.web.controller.param.CarouselEditParam;
 import recommend.service.web.entity.RecommendCarousel;
 import recommend.service.web.entity.UserAdmin;
 import recommend.service.web.service.RecommendCarouselService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * (RecommendCarousel)表控制层
@@ -64,7 +62,7 @@ public class RecommendCarouselController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    @ApiOperation(value = "获取单挑轮播图信息", notes = "根据id查询")
+    @ApiOperation(value = "获取单条轮播图信息", notes = "根据id查询")
     public Result<?> queryById(@PathVariable("id") Integer id, @TokenToAdminUser UserAdmin userAdmin) {
         logger.info("adminUser:{}", userAdmin.toString());
         RecommendCarousel carousel = recommendCarouselService.queryById(id);
@@ -77,7 +75,6 @@ public class RecommendCarouselController {
     /**
      * 新增数据
      * CarouselAddParam
-     *
      * @return 新增结果
      */
     @PostMapping("/add")
@@ -90,7 +87,7 @@ public class RecommendCarouselController {
         RecommendCarousel recommendCarousel = new RecommendCarousel();
         BeanUtil.copyProperties(carouselAddParam, recommendCarousel);
         String result = recommendCarouselService.insert(recommendCarousel);
-        if (ServiceResultEnum.SUCCESS.getResult().equals(result)){
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         }
         return ResultGenerator.genFailResult(result);
@@ -98,24 +95,46 @@ public class RecommendCarouselController {
 
     /**
      * 编辑数据
+     * <p>
+     * carouselEditParam 实体
      *
-     * @param recommendCarousel 实体
      * @return 编辑结果
      */
-    @PutMapping
-    public ResponseEntity<RecommendCarousel> edit(RecommendCarousel recommendCarousel) {
-        return ResponseEntity.ok(this.recommendCarouselService.update(recommendCarousel));
+    @PutMapping(value = "/update")
+    @ApiOperation(value = "修改轮播图信息", notes = "修改轮播图信息")
+    public Result<?> edit(
+            @RequestBody CarouselEditParam carouselEditParam,
+            @TokenToAdminUser UserAdmin userAdmin
+    ) {
+        logger.info("adminUser:{}", userAdmin.toString());
+        RecommendCarousel recommendCarousel = new RecommendCarousel();
+        BeanUtil.copyProperties(carouselEditParam, recommendCarousel);
+        String result = recommendCarouselService.update(recommendCarousel);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
     }
 
     /**
      * 删除数据
      *
-     * @param id 主键
+     * @param batchIdParam 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.recommendCarouselService.deleteById(id));
+    @DeleteMapping("/batchDelete")
+    @ApiOperation(value = "批量删除轮播图信息", notes = "批量删除轮播图信息")
+    public Result<?> delete(@RequestBody BatchIdParam batchIdParam, @TokenToAdminUser UserAdmin userAdmin) {
+        logger.info("adminUser:{}", userAdmin.toString());
+        if (batchIdParam == null || batchIdParam.getIds().length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (recommendCarouselService.deleteBatch(batchIdParam.getIds())) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
     }
 
 }

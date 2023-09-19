@@ -70,6 +70,7 @@ public interface RecommendCarouselDao {
      * @return 影响行数
      */
     int deleteById(Integer carouselId);
+    int deleteBatch(Long[] ids);
 
 }
 

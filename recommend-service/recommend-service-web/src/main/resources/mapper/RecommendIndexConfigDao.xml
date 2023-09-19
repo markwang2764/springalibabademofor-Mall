@@ -16,6 +16,9 @@
         <result property="updateUser" column="update_user" jdbcType="INTEGER"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user
+    </sql>
     <!--查询单个-->
     <select id="queryById" resultMap="RecommendIndexConfigMap">
         select
@@ -30,41 +33,25 @@
           config_id, config_name, config_type, goods_id, redirect_url, config_rank, is_deleted, create_time, create_user, update_time, update_user
         from tb_recommend_index_config
         <where>
-            <if test="configId != null">
-                and config_id = #{configId}
-            </if>
-            <if test="configName != null and configName != ''">
-                and config_name = #{configName}
-            </if>
-            <if test="configType != null">
+            <if test="configType != null and configType!=''">
                 and config_type = #{configType}
             </if>
-            <if test="goodsId != null">
-                and goods_id = #{goodsId}
-            </if>
-            <if test="redirectUrl != null and redirectUrl != ''">
-                and redirect_url = #{redirectUrl}
-            </if>
-            <if test="configRank != null">
-                and config_rank = #{configRank}
-            </if>
-            <if test="isDeleted != null">
-                and is_deleted = #{isDeleted}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="createUser != null">
-                and create_user = #{createUser}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
-            <if test="updateUser != null">
-                and update_user = #{updateUser}
-            </if>
+            and is_deleted = 0
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
+        order by config_rank desc
+        <if test="start!=null and limit!=null">
+            limit #{start}, #{limit}
+        </if>
+    </select>
+
+    <select id="getTotalIndexConfigs" parameterType="Map" resultType="int">
+        select count(*) from tb_recommend_index_config
+        <where>
+            <if test="configType!=null and configType!=''">
+                and config_type = #{configType}
+            </if>
+            and is_deleted = 0
+        </where>
     </select>
 
     <!--统计总行数-->

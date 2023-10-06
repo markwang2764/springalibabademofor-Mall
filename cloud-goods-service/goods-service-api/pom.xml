@@ -24,8 +24,8 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.example.common</groupId>
-            <artifactId>springcloudalibaba-common</artifactId>
+            <groupId>cloud.common</groupId>
+            <artifactId>cloud-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

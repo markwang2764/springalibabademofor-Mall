@@ -8,13 +8,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>推荐模块</description>
 
-    <artifactId>recommend-service</artifactId>
+    <groupId>cloud.goods.service</groupId>
+    <artifactId>cloud-goods-service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>recommend-service-web</module>
-        <module>recommend-service-api</module>
+        <module>goods-service-api</module>
+        <module>goods-service-web</module>
     </modules>
 
     <properties>
@@ -22,6 +22,5 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 
 </project>

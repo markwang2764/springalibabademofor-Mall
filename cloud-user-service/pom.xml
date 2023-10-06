@@ -7,11 +7,11 @@
         <artifactId>SpringCloudAlibabaDemo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.example.user.service</groupId>
-    <artifactId>springcloudalibaba-user-service</artifactId>
+    <groupId>cloud.user.service</groupId>
+    <artifactId>cloud-user-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springcloudalibaba-user-service</name>
-    <description>springcloudalibaba-user-service</description>
+    <name>cloud-user-service</name>
+    <description>cloud-user-service</description>
     <properties>
         <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,8 +19,8 @@
     </properties>
     <packaging>pom</packaging>
     <modules>
-        <module>springcloudalibaba-user-api</module>
-        <module>springcloudalibaba-user-web</module>
+        <module>cloud-user-web</module>
+        <module>cloud-user-api</module>
     </modules>
     <dependencies>
     </dependencies>

@@ -7,11 +7,11 @@
         <artifactId>SpringCloudAlibabaDemo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.example.common</groupId>
-    <artifactId>springcloudalibaba-common</artifactId>
+    <groupId>cloud.common</groupId>
+    <artifactId>cloud-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springcloudalibaba-common</name>
-    <description>springcloudalibaba-common</description>
+    <name>cloud-common</name>
+    <description>cloud-common</description>
     <properties>
         <java.version>8</java.version>
     </properties>

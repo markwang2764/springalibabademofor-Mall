@@ -20,12 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <modules>
-        <module>springcloudalibaba-common</module>
-        <module>springcloudalibaba-user-service</module>
-        <module>srpingcloudalibabademo-gateway</module>
-        <module>goods-service</module>
-        <module>goods-service/goods-service-web</module>
-        <module>recommend-service</module>
+        <module>cloud-common</module>
     </modules>
   <dependencyManagement>
       <dependencies>

@@ -1,11 +1,8 @@
 package goods.service.web.service;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.PageResult;
-import goods.service.web.dao.GoodsCategoryDao;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.PageResult;
 import goods.service.web.entity.GoodsCategory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 

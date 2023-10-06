@@ -64,11 +64,13 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>com.example.user.service.api</groupId>
-            <artifactId>springcloudalibaba-user-api</artifactId>
+            <groupId>cloud.user.api</groupId>
+            <artifactId>cloud-user-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>

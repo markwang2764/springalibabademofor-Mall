@@ -1,6 +1,6 @@
 package recommend.service.web.dao;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.PageQueryUtil;
 import recommend.service.web.entity.RecommendIndexConfig;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;

@@ -1,6 +1,6 @@
 package recommend.service.web.config;
 
-import com.example.springcloudalibabacommon.pojo.AdminUserToken;
+import cloud.common.springcloud.pojo.AdminUserToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;

@@ -1,6 +1,6 @@
 package recommend.service.web;
 
-import com.example.springcloudalibabauserapi.openfeign.CloudAdminUserServiceFeign;
+import cloud.user.api.CloudAdminUserServiceFeign;
 import goods.service.api.openfeign.GoodsServiceApiOpenFeign;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

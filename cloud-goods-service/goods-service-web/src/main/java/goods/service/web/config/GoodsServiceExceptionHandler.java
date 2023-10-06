@@ -1,7 +1,7 @@
 package goods.service.web.config;
 
-import com.example.springcloudalibabacommon.dto.Result;
-import com.example.springcloudalibabacommon.exception.CloudException;
+import cloud.common.springcloud.dto.Result;
+import cloud.common.springcloud.exception.CloudException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -21,6 +21,11 @@
     </properties>
     <modules>
         <module>cloud-common</module>
+        <module>cloud-gateway-admin</module>
+        <module>cloud-gateway-mall</module>
+        <module>cloud-goods-service</module>
+        <module>cloud-recommend-service</module>
+        <module>cloud-user-service</module>
     </modules>
   <dependencyManagement>
       <dependencies>

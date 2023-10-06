@@ -1,10 +1,8 @@
 package goods.service.web.service;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.PageResult;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.PageResult;
 import goods.service.web.entity.GoodsInfo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * (GoodsInfo)表服务接口

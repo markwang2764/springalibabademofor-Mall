@@ -1,6 +1,6 @@
 package goods.service.api.openfeign;
 
-import com.example.springcloudalibabacommon.dto.Result;
+import cloud.common.springcloud.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

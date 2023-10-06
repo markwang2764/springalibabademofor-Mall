@@ -1,9 +1,9 @@
 package recommend.service.web.controller;
 
-import com.example.springcloudalibabacommon.dto.Result;
-import com.example.springcloudalibabacommon.dto.ResultGenerator;
-import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
-import com.example.springcloudalibabacommon.util.BeanUtil;
+import cloud.common.springcloud.dto.Result;
+import cloud.common.springcloud.dto.ResultGenerator;
+import cloud.common.springcloud.enums.ServiceResultEnum;
+import cloud.common.springcloud.util.BeanUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

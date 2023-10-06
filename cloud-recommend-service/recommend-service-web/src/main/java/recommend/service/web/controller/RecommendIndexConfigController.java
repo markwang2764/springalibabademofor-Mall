@@ -1,9 +1,9 @@
 package recommend.service.web.controller;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.Result;
-import com.example.springcloudalibabacommon.dto.ResultGenerator;
-import com.example.springcloudalibabacommon.enums.IndexConfigTypeEnum;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.Result;
+import cloud.common.springcloud.dto.ResultGenerator;
+import cloud.common.springcloud.enums.IndexConfigTypeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

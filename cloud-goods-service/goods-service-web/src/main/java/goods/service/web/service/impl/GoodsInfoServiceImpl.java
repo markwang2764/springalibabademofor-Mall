@@ -1,9 +1,9 @@
 package goods.service.web.service.impl;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.PageResult;
-import com.example.springcloudalibabacommon.enums.CategoryLevelEnum;
-import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.PageResult;
+import cloud.common.springcloud.enums.CategoryLevelEnum;
+import cloud.common.springcloud.enums.ServiceResultEnum;
 import goods.service.web.dao.GoodsCategoryDao;
 import goods.service.web.entity.GoodsCategory;
 import goods.service.web.entity.GoodsInfo;

@@ -1,16 +1,14 @@
 package goods.service.web.service.impl;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.PageResult;
-import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.PageResult;
+import cloud.common.springcloud.enums.ServiceResultEnum;
 import goods.service.web.entity.GoodsCategory;
 import goods.service.web.dao.GoodsCategoryDao;
 import goods.service.web.service.GoodsCategoryService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 

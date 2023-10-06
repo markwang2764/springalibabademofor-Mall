@@ -7,11 +7,11 @@
         <artifactId>SpringCloudAlibabaDemo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.example.gateway</groupId>
-    <artifactId>srpingcloudalibabademo-gateway</artifactId>
+    <groupId>cloud.gateway.admin</groupId>
+    <artifactId>cloud-gateway-admin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springcloudalibaba-gateway</name>
-    <description>springcloudalibaba-gateway</description>
+    <name>cloud-gateway-admin</name>
+    <description>cloud-gateway-admin</description>
     <properties>
         <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,15 +36,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.example.user.service.api</groupId>
-            <artifactId>springcloudalibaba-user-api</artifactId>
+            <groupId>cloud.common</groupId>
+            <artifactId>cloud-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.example.common</groupId>
-            <artifactId>springcloudalibaba-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
+
     </dependencies>
 
 </project>

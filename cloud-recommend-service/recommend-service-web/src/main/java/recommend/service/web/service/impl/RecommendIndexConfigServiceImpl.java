@@ -1,7 +1,7 @@
 package recommend.service.web.service.impl;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.PageResult;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.PageResult;
 import recommend.service.web.entity.RecommendIndexConfig;
 import recommend.service.web.dao.RecommendIndexConfigDao;
 import recommend.service.web.service.RecommendIndexConfigService;

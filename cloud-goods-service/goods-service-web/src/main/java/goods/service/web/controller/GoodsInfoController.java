@@ -1,10 +1,10 @@
 package goods.service.web.controller;
 
-import com.example.springcloudalibabacommon.dto.PageQueryUtil;
-import com.example.springcloudalibabacommon.dto.Result;
-import com.example.springcloudalibabacommon.dto.ResultGenerator;
-import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
-import com.example.springcloudalibabacommon.util.BeanUtil;
+import cloud.common.springcloud.dto.PageQueryUtil;
+import cloud.common.springcloud.dto.Result;
+import cloud.common.springcloud.dto.ResultGenerator;
+import cloud.common.springcloud.enums.ServiceResultEnum;
+import cloud.common.springcloud.util.BeanUtil;
 import goods.service.web.config.annotation.TokenToAdminUser;
 import goods.service.web.controller.param.BatchIdParam;
 import goods.service.web.controller.param.GoodsAddParam;

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>cloud-recommend-service</artifactId>
-        <groupId>cloud-recommend-service</groupId>
+        <groupId>cloud.recommend.service</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -56,8 +56,8 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>com.example.common</groupId>
-            <artifactId>springcloudalibaba-common</artifactId>
+            <groupId>cloud.common</groupId>
+            <artifactId>cloud-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -69,8 +69,8 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.example.user.service.api</groupId>
-            <artifactId>springcloudalibaba-user-api</artifactId>
+            <groupId>cloud.user.api</groupId>
+            <artifactId>cloud-user-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

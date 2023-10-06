@@ -1,8 +1,8 @@
 package recommend.service.web.config.handler;
 
-import com.example.springcloudalibabacommon.dto.Result;
-import com.example.springcloudalibabacommon.exception.CloudException;
-import com.example.springcloudalibabauserapi.openfeign.CloudAdminUserServiceFeign;
+import cloud.common.springcloud.dto.Result;
+import cloud.common.springcloud.exception.CloudException;
+import cloud.user.api.CloudAdminUserServiceFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

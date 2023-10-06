@@ -1,6 +1,6 @@
 package recommend.service.web.service.impl;
 
-import com.example.springcloudalibabacommon.enums.ServiceResultEnum;
+import cloud.common.springcloud.enums.ServiceResultEnum;
 import recommend.service.web.entity.RecommendCarousel;
 import recommend.service.web.dao.RecommendCarouselDao;
 import recommend.service.web.service.RecommendCarouselService;

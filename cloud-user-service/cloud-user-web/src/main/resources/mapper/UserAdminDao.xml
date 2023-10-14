@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.springcloudalibabauserweb.dao.UserAdminDao">
+<mapper namespace="cloud.user.web.dao.UserAdminDao">
 
-    <resultMap type="com.example.springcloudalibabauserweb.entity.UserAdmin" id="UserAdminMap">
+    <resultMap type="cloud.user.web.entity.UserAdmin" id="UserAdminMap">
         <id property="adminUserId" column="admin_user_id" jdbcType="BIGINT"/>
         <result property="loginUserName" column="login_user_name" jdbcType="VARCHAR"/>
         <result property="loginPassword" column="login_password" jdbcType="VARCHAR"/>

@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class SrpingcloudalibabademoGatewayApplication {
+public class CloudGateWayAdmin {
 
     public static void main(String[] args) {
-        SpringApplication.run(SrpingcloudalibabademoGatewayApplication.class, args);
+        SpringApplication.run(CloudGateWayAdmin.class, args);
     }
 
 }

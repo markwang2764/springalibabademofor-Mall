@@ -33,7 +33,7 @@ public class AdminUserSwagger3Config {
                 .apiInfo(apiInfo())
                 .ignoredParameterTypes(AdminUserToken.class)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.springcloudalibabauserweb.controller"))
+                .apis(RequestHandlerSelectors.basePackage("cloud.user.web.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalRequestParameters(getGlobalRequestParameters());

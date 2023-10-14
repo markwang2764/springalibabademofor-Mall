@@ -5,7 +5,6 @@ import cloud.common.springcloud.dto.ResultGenerator;
 import cloud.common.springcloud.pojo.AdminUserToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -19,6 +18,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -30,8 +30,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class ValidTokenGlobalFilter implements GlobalFilter, Ordered {
 
-    @Autowired
-    private RedisTemplate<?,?> redisTemplate;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -46,8 +46,8 @@ public class ValidTokenGlobalFilter implements GlobalFilter, Ordered {
         if (token == null || token.isEmpty()) {
             return wrapErrorResponse(exchange, chain);
         }
-        ValueOperations<String, AdminUserToken> opsForAdminUserToken = (ValueOperations<String, AdminUserToken>) redisTemplate.opsForValue();
-        AdminUserToken tokenObject = opsForAdminUserToken.get(token);
+        ValueOperations<String, Object> opsForAdminUserToken = redisTemplate.opsForValue();
+        AdminUserToken tokenObject = (AdminUserToken) opsForAdminUserToken.get(token);
         if (tokenObject == null) {
             return wrapErrorResponse(exchange, chain);
         }

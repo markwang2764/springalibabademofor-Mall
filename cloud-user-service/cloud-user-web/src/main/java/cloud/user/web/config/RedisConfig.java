@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,7 +36,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public RedisTemplate<String, ?> redisCacheTemplate(LettuceConnectionFactory redisLettuceConnectionFactory) {
+    public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory redisLettuceConnectionFactory) {
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
@@ -62,18 +61,15 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public KeyGenerator keyGenerator() {
-        return new KeyGenerator() {
-            @Override
-            public Object generate(Object target, Method method, Object... params) {
-                StringBuilder stringBuffer = new StringBuilder();
-                stringBuffer.append(target.getClass().getName());
-                stringBuffer.append(method.getName());
-                for (Object obj :
-                        params) {
-                    stringBuffer.append(obj.toString());
-                }
-                return stringBuffer.toString();
+        return (target, method, params) -> {
+            StringBuilder stringBuffer = new StringBuilder();
+            stringBuffer.append(target.getClass().getName());
+            stringBuffer.append(method.getName());
+            for (Object obj :
+                    params) {
+                stringBuffer.append(obj.toString());
             }
+            return stringBuffer.toString();
         };
     }
 }

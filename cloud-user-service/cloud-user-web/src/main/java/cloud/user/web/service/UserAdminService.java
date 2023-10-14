@@ -68,4 +68,9 @@ public interface UserAdminService {
     boolean deleteById(Long adminUserId);
 
 
+    boolean updatePassword(Long adminUserId, String originalPassword, String newPassword);
+
+    boolean updateName(Long adminUserId, String loginUserName, String nickName);
+
+    Boolean logout(String token);
 }

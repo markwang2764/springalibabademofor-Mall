@@ -8,12 +8,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("com.example.springcloudalibabauserweb.dao")
+@MapperScan("cloud.user.web.dao")
 @EnableWebMvc
-public class SpringcloudalibabaUserWebApplication {
+public class UserWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringcloudalibabaUserWebApplication.class, args);
+        SpringApplication.run(UserWebApplication.class, args);
     }
 
 }

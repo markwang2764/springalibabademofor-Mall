@@ -13,6 +13,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import javax.annotation.Resource;
+
 /**
  * @program: SpringCloudAlibabaDemo
  * @description: check Token
@@ -21,7 +23,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  **/
 @Component
 public class TokenToAdminUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {

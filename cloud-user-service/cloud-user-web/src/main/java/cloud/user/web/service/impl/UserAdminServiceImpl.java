@@ -6,7 +6,6 @@ import cloud.common.springcloud.util.SystemUtil;
 import cloud.user.web.entity.UserAdmin;
 import cloud.user.web.dao.UserAdminDao;
 import cloud.user.web.service.UserAdminService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class UserAdminServiceImpl implements UserAdminService {
     @Resource
     private UserAdminDao userAdminDao;
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
@@ -125,5 +124,34 @@ public class UserAdminServiceImpl implements UserAdminService {
     @Override
     public boolean deleteById(Long adminUserId) {
         return this.userAdminDao.deleteById(adminUserId) > 0;
+    }
+
+    @Override
+    public boolean updatePassword(Long adminUserId, String originalPassword, String newPassword) {
+        UserAdmin userAdmin = userAdminDao.queryById(adminUserId);
+        if (userAdmin != null) {
+            if (originalPassword.equals(userAdmin.getLoginPassword())) {
+                userAdmin.setLoginUserName(newPassword);
+                return userAdminDao.update(userAdmin) > 0;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateName(Long adminUserId, String loginUserName, String nickName) {
+        UserAdmin userAdmin = userAdminDao.queryById(adminUserId);
+        if (userAdmin != null) {
+            userAdmin.setLoginUserName(loginUserName);
+            userAdmin.setNickName(nickName);
+            return userAdminDao.update(userAdmin) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean logout(String token) {
+        redisTemplate.delete(token);
+        return true;
     }
 }

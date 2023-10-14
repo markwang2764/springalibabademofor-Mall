@@ -5,6 +5,8 @@ import cloud.common.springcloud.dto.ResultGenerator;
 import cloud.common.springcloud.pojo.AdminUserToken;
 import cloud.user.web.config.annotation.TokenToAdminUser;
 import cloud.user.web.controller.param.LoginParam;
+import cloud.user.web.controller.param.UpdateAdminNameParam;
+import cloud.user.web.controller.param.UpdateAdminPasswordParam;
 import cloud.user.web.entity.UserAdmin;
 import cloud.user.web.service.UserAdminService;
 import io.swagger.annotations.Api;
@@ -60,9 +62,54 @@ public class UserAdminController {
         logger.info("adminUser: {}", adminUserToken.toString());
         UserAdmin userAdminEntity = userAdminService.queryById(adminUserToken.getAdminUserId());
         if (userAdminEntity != null){
+            userAdminEntity.setLoginPassword("*****");
             return ResultGenerator.genSuccessResult(userAdminEntity);
         }
         return ResultGenerator.genFailResult("无此用户数据");
+    }
+
+    @PutMapping("/password")
+    @ApiOperation("修改管理员密码接口")
+    public Result<?> passwordUpdate(
+            @TokenToAdminUser AdminUserToken adminUserToken,
+            @RequestBody @Valid UpdateAdminPasswordParam adminPasswordParam
+            ) {
+        logger.info("adminUser: {}", adminUserToken.toString());
+        if (userAdminService.updatePassword(
+                adminUserToken.getAdminUserId(),
+                adminPasswordParam.getOriginalPassword(),
+                adminPasswordParam.getNewPassword()
+        )){
+            return ResultGenerator.genSuccessResult();
+        }
+        return ResultGenerator.genFailResult("DB ERROR");
+    }
+
+    @PutMapping("/name")
+    @ApiOperation("修改管理员信息接口")
+    public Result<?> nameUpdate(
+            @TokenToAdminUser AdminUserToken adminUserToken,
+            @RequestBody @Valid UpdateAdminNameParam adminNameParam
+    ) {
+        logger.info("adminUser: {}", adminUserToken.toString());
+        if (userAdminService.updateName(
+                adminUserToken.getAdminUserId(),
+                adminNameParam.getLoginUserName(),
+                adminNameParam.getNickName()
+        )){
+            return ResultGenerator.genSuccessResult();
+        }
+        return ResultGenerator.genFailResult("DB ERROR");
+    }
+
+    @DeleteMapping("/logout")
+    @ApiOperation("管理员退出登录接口")
+    public Result<?> logout(
+            @TokenToAdminUser AdminUserToken adminUserToken
+    ) {
+        logger.info("adminUser: {}", adminUserToken.toString());
+       userAdminService.logout(adminUserToken.getToken());
+        return ResultGenerator.genSuccessResult();
     }
 
     @GetMapping("/{token}")

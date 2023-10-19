@@ -184,6 +184,160 @@
                 #{goodsDetailContent}, #{originalPrice}, #{sellingPrice}, #{stockNum}, #{tag}, #{goodsSellStatus},
                 #{createUser}, #{createTime}, #{updateUser}, #{updateTime})
     </insert>
+    <insert id="insertSelective" parameterType="goods.service.web.entity.GoodsInfo">
+        insert into tb_goods_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsIntro != null">
+                goods_intro,
+            </if>
+            <if test="goodsCategoryId != null">
+                goods_category_id,
+            </if>
+            <if test="goodsCoverImg != null">
+                goods_cover_img,
+            </if>
+            <if test="goodsCarousel != null">
+                goods_carousel,
+            </if>
+            <if test="originalPrice != null">
+                original_price,
+            </if>
+            <if test="sellingPrice != null">
+                selling_price,
+            </if>
+            <if test="stockNum != null">
+                stock_num,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="goodsSellStatus != null">
+                goods_sell_status,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="goodsDetailContent != null">
+                goods_detail_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIntro != null">
+                #{goodsIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIntro != null">
+                #{goodsCategoryId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCoverImg != null">
+                #{goodsCoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCarousel != null">
+                #{goodsCarousel,jdbcType=VARCHAR},
+            </if>
+            <if test="originalPrice != null">
+                #{originalPrice,jdbcType=INTEGER},
+            </if>
+            <if test="sellingPrice != null">
+                #{sellingPrice,jdbcType=INTEGER},
+            </if>
+            <if test="stockNum != null">
+                #{stockNum,jdbcType=INTEGER},
+            </if>
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSellStatus != null">
+                #{goodsSellStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsDetailContent != null">
+                #{goodsDetailContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="goods.service.web.entity.GoodsInfo">
+        update tb_goods_info
+        <set>
+            <if test="goodsName != null">
+                goods_name = #{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsIntro != null">
+                goods_intro = #{goodsIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCategoryId != null">
+                goods_category_id = #{goodsCategoryId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCoverImg != null">
+                goods_cover_img = #{goodsCoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCarousel != null">
+                goods_carousel = #{goodsCarousel,jdbcType=VARCHAR},
+            </if>
+            <if test="originalPrice != null">
+                original_price = #{originalPrice,jdbcType=INTEGER},
+            </if>
+            <if test="sellingPrice != null">
+                selling_price = #{sellingPrice,jdbcType=INTEGER},
+            </if>
+            <if test="stockNum != null">
+                stock_num = #{stockNum,jdbcType=INTEGER},
+            </if>
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSellStatus != null">
+                goods_sell_status = #{goodsSellStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsDetailContent != null">
+                goods_detail_content = #{goodsDetailContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </update>
 
     <update id="batchUpdateSellStatus">
         update tb_goods_info

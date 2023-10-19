@@ -2,6 +2,11 @@ package recommend.service.web.service.impl;
 
 import cloud.common.springcloud.dto.PageQueryUtil;
 import cloud.common.springcloud.dto.PageResult;
+import cloud.common.springcloud.dto.Result;
+import cloud.common.springcloud.enums.ServiceResultEnum;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import goods.service.api.dto.GoodsDTO;
+import goods.service.api.openfeign.GoodsServiceApiOpenFeign;
 import recommend.service.web.entity.RecommendIndexConfig;
 import recommend.service.web.dao.RecommendIndexConfigDao;
 import recommend.service.web.service.RecommendIndexConfigService;
@@ -20,6 +25,9 @@ import java.util.List;
 public class RecommendIndexConfigServiceImpl implements RecommendIndexConfigService {
     @Resource
     private RecommendIndexConfigDao recommendIndexConfigDao;
+
+    @Resource
+    private GoodsServiceApiOpenFeign goodsServiceApiOpenFeign;
 
     /**
      * 通过ID查询单条数据
@@ -46,9 +54,18 @@ public class RecommendIndexConfigServiceImpl implements RecommendIndexConfigServ
      * @return 实例对象
      */
     @Override
-    public RecommendIndexConfig insert(RecommendIndexConfig recommendIndexConfig) {
-        this.recommendIndexConfigDao.insert(recommendIndexConfig);
-        return recommendIndexConfig;
+    public String insert(RecommendIndexConfig recommendIndexConfig) {
+        Result<GoodsDTO> goodDetail = goodsServiceApiOpenFeign.getGoodsDetail(recommendIndexConfig.getGoodsId());
+        if (goodDetail == null || goodDetail.getResultCode() != 200) {
+            return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
+        }
+        if (recommendIndexConfigDao.selectByTypeAndGoodsId(recommendIndexConfig.getConfigType(), recommendIndexConfig.getGoodsId() != null)) {
+            return ServiceResultEnum.SAME_INDEX_CONFIG_EXIST.getResult();
+        }
+        if (recommendIndexConfigDao.insert(recommendIndexConfig) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
     }
 
     /**

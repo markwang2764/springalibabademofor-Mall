@@ -55,7 +55,7 @@ public class GoodsServiceSwagger3Config {
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("springalibaba-demo goods_service 接口文档")
+                .title("goods_service 接口文档")
                 .description("swagger接口文档")
                 .version("2.0")
                 .build();

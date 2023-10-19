@@ -127,7 +127,41 @@
         update_time = values(update_time),
         update_user = values(update_user)
     </insert>
-
+    <insert id="insertSelective" parameterType="recommend.service.web.entity.RecommendIndexConfig">
+        insert into tb_recommend_index_config
+        <set>
+            <if test="configName != null and configName != ''">
+                config_name,
+            </if>
+            <if test="configType != null">
+                config_type,
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="redirectUrl != null and redirectUrl != ''">
+                redirect_url = #{redirectUrl},
+            </if>
+            <if test="configRank != null">
+                config_rank = #{configRank},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+    </insert>
     <!--通过主键修改数据-->
     <update id="update">
         update tb_recommend_index_config

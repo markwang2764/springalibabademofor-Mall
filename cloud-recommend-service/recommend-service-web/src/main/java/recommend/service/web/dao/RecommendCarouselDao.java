@@ -37,6 +37,7 @@ public interface RecommendCarouselDao {
      * @return 影响行数
      */
     int insert(RecommendCarousel recommendCarousel);
+    int insertSelective(RecommendCarousel recommendCarousel);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）

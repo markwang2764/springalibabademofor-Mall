@@ -5,6 +5,7 @@ import cloud.common.springcloud.dto.Result;
 import cloud.common.springcloud.dto.ResultGenerator;
 import cloud.common.springcloud.enums.ServiceResultEnum;
 import cloud.common.springcloud.util.BeanUtil;
+import cloud.common.springcloud.util.TecentCDNUtil;
 import goods.service.web.config.annotation.TokenToAdminUser;
 import goods.service.web.controller.param.BatchIdParam;
 import goods.service.web.controller.param.GoodsAddParam;
@@ -14,12 +15,14 @@ import goods.service.web.entity.GoodsInfo;
 import goods.service.web.entity.UserAdmin;
 import goods.service.web.service.GoodsCategoryService;
 import goods.service.web.service.GoodsInfoService;
+import goods.service.web.service.TencentCDNService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -45,6 +48,7 @@ public class GoodsInfoController {
     private GoodsInfoService goodsInfoService;
     @Resource
     private GoodsCategoryService goodsCategoryService;
+
 
     /**
      * 分页查询
@@ -187,6 +191,17 @@ public class GoodsInfoController {
 //    public ResponseEntity<Boolean> deleteById(Object id) {
 //        return ResponseEntity.ok(this.goodsInfoService.deleteById(id));
 //    }
-
+    @ApiOperation(value = "上传图片", notes = "上传图片", httpMethod = "POST")
+    @PostMapping(value = "/uploadImage")
+    public Result<?> uploadImage(
+            @RequestParam("file") MultipartFile file,
+            @TokenToAdminUser UserAdmin userAdmin
+    ) {
+        if (file == null) {
+            return ResultGenerator.genFailResult("文件为空");
+        }
+        String r = TecentCDNUtil.uploadImages(file);
+        return ResultGenerator.genSuccessResult(new StringBuilder(r));
+    }
 }
 

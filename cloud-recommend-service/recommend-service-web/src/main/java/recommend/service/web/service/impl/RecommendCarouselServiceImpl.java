@@ -44,7 +44,7 @@ public class RecommendCarouselServiceImpl implements RecommendCarouselService {
      */
     @Override
     public String insert(RecommendCarousel recommendCarousel) {
-        if (recommendCarouselDao.insert(recommendCarousel) > 0) {
+        if (recommendCarouselDao.insertSelective(recommendCarousel) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();

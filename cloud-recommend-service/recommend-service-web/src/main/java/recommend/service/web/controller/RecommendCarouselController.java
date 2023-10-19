@@ -4,10 +4,12 @@ import cloud.common.springcloud.dto.Result;
 import cloud.common.springcloud.dto.ResultGenerator;
 import cloud.common.springcloud.enums.ServiceResultEnum;
 import cloud.common.springcloud.util.BeanUtil;
+import cloud.common.springcloud.util.TecentCDNUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 import recommend.service.web.config.annotation.TokenToAdminUser;
 import recommend.service.web.controller.param.BatchIdParam;
 import recommend.service.web.controller.param.CarouselAddParam;
@@ -36,7 +38,6 @@ public class RecommendCarouselController {
     @Resource
     RecommendCarouselService recommendCarouselService;
 
-
     /**
      * 轮播图列表
      *
@@ -54,7 +55,6 @@ public class RecommendCarouselController {
         }
         return ResultGenerator.genSuccessResult(lists);
     }
-
     /**
      * 通过主键查询单条数据
      *
@@ -70,6 +70,19 @@ public class RecommendCarouselController {
             return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
         }
         return ResultGenerator.genSuccessResult(carousel);
+    }
+
+    @ApiOperation(value = "上传图片", notes = "上传图片", httpMethod = "POST")
+    @PostMapping(value = "/uploadImage")
+    public Result<?> uploadImage(
+            @RequestParam("file") MultipartFile file,
+            @TokenToAdminUser UserAdmin userAdmin
+    ) {
+        if (file == null) {
+            return ResultGenerator.genFailResult("文件为空");
+        }
+        String r = TecentCDNUtil.uploadImages(file);
+        return ResultGenerator.genSuccessResult(new StringBuilder(r));
     }
 
     /**

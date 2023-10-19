@@ -42,6 +42,8 @@ public interface GoodsInfoDao {
      * @return 影响行数
      */
     int insert(GoodsInfo goodsInfo);
+    int insertSelective(GoodsInfo goodsInfo);
+    int updateByPrimaryKeySelective(GoodsInfo goodsInfo);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）

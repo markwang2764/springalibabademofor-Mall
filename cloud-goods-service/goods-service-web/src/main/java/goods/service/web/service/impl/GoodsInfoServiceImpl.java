@@ -66,7 +66,7 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         if (goodsInfoDao.queryByCategoryIdAndName(goodsInfo.getGoodsCategoryId(), goodsInfo.getGoodsName()) != null) {
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
-        if (goodsInfoDao.insert(goodsInfo) > 0) {
+        if (goodsInfoDao.insertSelective(goodsInfo) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();

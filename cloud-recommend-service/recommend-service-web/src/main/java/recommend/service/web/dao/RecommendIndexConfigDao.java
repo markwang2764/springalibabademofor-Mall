@@ -76,6 +76,8 @@ public interface RecommendIndexConfigDao {
      * @return 影响行数
      */
     int deleteById(Long configId);
+    RecommendIndexConfig selectByTypeAndGoodsId(@Param("configType") int configType, @Param("goodsId") Long goodsId);
+    int insertSelective(RecommendIndexConfig record);
 
 }
 

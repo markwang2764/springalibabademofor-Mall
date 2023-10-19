@@ -42,7 +42,7 @@ public class UserAdminServiceImpl implements UserAdminService {
             userToken.setAdminUserId(userAdmin.getAdminUserId());
             userToken.setToken(token);
             ValueOperations<String, Object> setToken = redisTemplate.opsForValue();
-            setToken.set(token, userToken, 20 * 24 * 60 * 60, TimeUnit.SECONDS);
+            setToken.set(token, userToken, 2, TimeUnit.DAYS);
             return token;
         }
         return "登录失败";

@@ -4,12 +4,15 @@ import cloud.common.springcloud.dto.PageQueryUtil;
 import cloud.common.springcloud.dto.Result;
 import cloud.common.springcloud.dto.ResultGenerator;
 import cloud.common.springcloud.enums.IndexConfigTypeEnum;
+import cloud.common.springcloud.enums.ServiceResultEnum;
+import cloud.common.springcloud.util.BeanUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import recommend.service.web.config.annotation.TokenToAdminUser;
+import recommend.service.web.controller.param.IndexConfigAddParam;
 import recommend.service.web.entity.RecommendIndexConfig;
 import recommend.service.web.entity.UserAdmin;
 import recommend.service.web.service.RecommendIndexConfigService;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +32,7 @@ import java.util.Map;
  */
 @RestController
 @Api(value = "v1", tags = "后台管理系统首页配置模块接口")
-@RequestMapping("/indexConfig/admin")
+@RequestMapping("/indexConfigs/admin")
 public class RecommendIndexConfigController {
 
     private static final Logger logger = LoggerFactory.getLogger(RecommendIndexConfigController.class);
@@ -81,12 +85,23 @@ public class RecommendIndexConfigController {
     /**
      * 新增数据
      *
-     * @param recommendIndexConfig 实体
+     * @param indexConfigAddParam 实体
      * @return 新增结果
      */
-    @PostMapping
-    public ResponseEntity<RecommendIndexConfig> add(RecommendIndexConfig recommendIndexConfig) {
-        return ResponseEntity.ok(this.recommendIndexConfigService.insert(recommendIndexConfig));
+    @PostMapping("/add")
+    @ApiOperation(value = "新增首页配置项", notes = "新增首页配置项")
+    public Result<?> add(
+            @RequestBody @Valid IndexConfigAddParam indexConfigAddParam,
+            @TokenToAdminUser UserAdmin userAdmin
+    ) {
+        logger.info("adminUser:{}", userAdmin.toString());
+        RecommendIndexConfig indexConfig = new RecommendIndexConfig();
+        BeanUtil.copyProperties(indexConfigAddParam, indexConfig);
+        String result = recommendIndexConfigService.insert(indexConfig);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        }
+        return ResultGenerator.genFailResult(result);
     }
 
     /**

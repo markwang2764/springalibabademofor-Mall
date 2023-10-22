@@ -59,10 +59,10 @@ public class RecommendIndexConfigServiceImpl implements RecommendIndexConfigServ
         if (goodDetail == null || goodDetail.getResultCode() != 200) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
-        if (recommendIndexConfigDao.selectByTypeAndGoodsId(recommendIndexConfig.getConfigType(), recommendIndexConfig.getGoodsId() != null)) {
+        if (recommendIndexConfigDao.selectByTypeAndGoodsId(recommendIndexConfig.getConfigType(), recommendIndexConfig.getGoodsId()) != null) {
             return ServiceResultEnum.SAME_INDEX_CONFIG_EXIST.getResult();
         }
-        if (recommendIndexConfigDao.insert(recommendIndexConfig) > 0) {
+        if (recommendIndexConfigDao.insertSelective(recommendIndexConfig) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
@@ -87,7 +87,10 @@ public class RecommendIndexConfigServiceImpl implements RecommendIndexConfigServ
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Long configId) {
-        return this.recommendIndexConfigDao.deleteById(configId) > 0;
+    public boolean deleteByIds(Long[] ids) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return recommendIndexConfigDao.deleteBatch(ids) > 0;
     }
 }

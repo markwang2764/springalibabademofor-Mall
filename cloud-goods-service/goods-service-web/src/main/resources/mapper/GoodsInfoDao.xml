@@ -339,15 +339,7 @@
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
 
-    <update id="batchUpdateSellStatus">
-        update tb_goods_info
-        set goods_sell_status=#{sellStatus},
-        update_time=now()
-        where goods_id in
-        <foreach collection="orderIds" open="(" separator="," close=")" item="id">
-            #{id}
-        </foreach>
-    </update>
+
 
     <insert id="insertBatch" keyProperty="goodsId" useGeneratedKeys="true">
         insert into tb_goods_info(goods_name, goods_intro, goods_category_id, goods_cover_img, goods_carousel,
@@ -448,6 +440,13 @@
         from tb_goods_info
         where goods_id = #{goodsId}
     </delete>
+
+    <update id="batchUpdateSellStatus">
+        update tb_goods_info set goods_sell_status = #{sellStatus}, update_time=now() where goods_id in
+        <foreach collection="orderIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>
 

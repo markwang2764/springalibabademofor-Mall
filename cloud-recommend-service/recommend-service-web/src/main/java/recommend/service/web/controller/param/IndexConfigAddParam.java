@@ -23,7 +23,7 @@ public class IndexConfigAddParam {
     @NotNull(message = "configType不能为空")
     @Min(value = 1, message = "configType最小值为1")
     @Max(value= 5, message = "configType最大值为5")
-    private Byte configType;
+    private Integer configType;
     @ApiModelProperty("商品id")
     @NotNull(message = "商品id不能为空")
     @Min(value =1, message = "商品id不能为空")

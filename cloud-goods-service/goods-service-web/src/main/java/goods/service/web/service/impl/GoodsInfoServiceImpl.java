@@ -99,10 +99,6 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
-    @Override
-    public Boolean BatchUpdateSellStatus(Long[] ids, int sellStatus) {
-        return goodsInfoDao.batchUpdateSellStatus(ids, sellStatus)>0;
-    }
 
     /**
      * 通过主键删除数据
@@ -113,5 +109,10 @@ public class GoodsInfoServiceImpl implements GoodsInfoService {
     @Override
     public boolean deleteById(Object goodsId) {
         return this.goodsInfoDao.deleteById(goodsId) > 0;
+    }
+
+    @Override
+    public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
+        return goodsInfoDao.batchUpdateSellStatus(ids, sellStatus)>0;
     }
 }

@@ -94,6 +94,20 @@
             </if>
         </where>
     </select>
+    <select id="findIndexConfigsByTypeAndNum" resultMap="RecommendIndexConfigMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_recommend_index_config
+        where config_type = #{configType} and is_deleted = 0
+        order by config_rank desc limit #{number}
+    </select>
+    <select id="selectByTypeAndGoodsId" resultMap="RecommendIndexConfigMap">
+        select <include refid="Base_Column_List"/>
+        from tb_recommend_index_config
+        where config_type = #{configType, jdbcType=BIGINT}
+        and goods_id=#{goodsId, jdbcType=BIGINT}
+        and is_deleted = 0 limit 1
+    </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="configId" useGeneratedKeys="true">
@@ -129,38 +143,76 @@
     </insert>
     <insert id="insertSelective" parameterType="recommend.service.web.entity.RecommendIndexConfig">
         insert into tb_recommend_index_config
-        <set>
-            <if test="configName != null and configName != ''">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configId != null">
+                config_id,
+            </if>
+            <if test="configName != null">
                 config_name,
             </if>
             <if test="configType != null">
                 config_type,
             </if>
             <if test="goodsId != null">
-                goods_id = #{goodsId},
+                goods_id,
             </if>
-            <if test="redirectUrl != null and redirectUrl != ''">
-                redirect_url = #{redirectUrl},
+            <if test="redirectUrl != null">
+                redirect_url,
             </if>
             <if test="configRank != null">
-                config_rank = #{configRank},
+                config_rank,
             </if>
             <if test="isDeleted != null">
-                is_deleted = #{isDeleted},
+                is_deleted,
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time,
             </if>
             <if test="createUser != null">
-                create_user = #{createUser},
+                create_user,
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime},
+                update_time,
             </if>
             <if test="updateUser != null">
-                update_user = #{updateUser},
+                update_user,
             </if>
-        </set>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="configId != null">
+                #{configId,jdbcType=BIGINT},
+            </if>
+            <if test="configName != null">
+                #{configName,jdbcType=VARCHAR},
+            </if>
+            <if test="configType != null">
+                #{configType,jdbcType=TINYINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="redirectUrl != null">
+                #{redirectUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="configRank != null">
+                #{configRank,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=INTEGER},
+            </if>
+        </trim>
     </insert>
     <!--通过主键修改数据-->
     <update id="update">
@@ -204,6 +256,15 @@
     <delete id="deleteById">
         delete from tb_recommend_index_config where config_id = #{configId}
     </delete>
+
+    <update id="deleteBatch">
+        update tb_recommend_index_config
+        set is_deleted=1, update_time=now() where is_deleted=0
+        and config_id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>
 

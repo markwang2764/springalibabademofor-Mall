@@ -43,8 +43,6 @@ public interface GoodsInfoService {
      */
     String update(GoodsInfo goodsInfo);
 
-    Boolean BatchUpdateSellStatus(Long[] ids, int sellStatus);
-
     /**
      * 通过主键删除数据
      *
@@ -52,5 +50,7 @@ public interface GoodsInfoService {
      * @return 是否成功
      */
     boolean deleteById(Object goodsId);
+
+    Boolean batchUpdateSellStatus(Long[] ids, int sellStatus);
 
 }

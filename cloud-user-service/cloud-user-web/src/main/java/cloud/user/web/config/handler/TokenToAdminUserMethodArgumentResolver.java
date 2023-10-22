@@ -3,7 +3,6 @@ package cloud.user.web.config.handler;
 import cloud.common.springcloud.exception.CloudException;
 import cloud.common.springcloud.pojo.AdminUserToken;
 import cloud.user.web.config.annotation.TokenToAdminUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;

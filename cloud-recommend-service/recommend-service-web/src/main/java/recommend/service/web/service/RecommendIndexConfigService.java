@@ -32,7 +32,7 @@ public interface RecommendIndexConfigService {
      * @param recommendIndexConfig 实例对象
      * @return 实例对象
      */
-    RecommendIndexConfig insert(RecommendIndexConfig recommendIndexConfig);
+    String insert(RecommendIndexConfig recommendIndexConfig);
 
     /**
      * 修改数据
@@ -44,10 +44,9 @@ public interface RecommendIndexConfigService {
 
     /**
      * 通过主键删除数据
-     *
-     * @param configId 主键
+     * @param ids 主键
      * @return 是否成功
      */
-    boolean deleteById(Long configId);
+    boolean deleteByIds(Long[] ids);
 
 }

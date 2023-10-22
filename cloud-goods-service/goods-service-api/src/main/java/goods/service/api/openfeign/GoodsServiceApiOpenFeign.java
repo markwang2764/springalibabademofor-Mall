@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author: Mr.markWang 2764
  * @create: 2023-09-09 14:35
  **/
-@FeignClient(value = "goods-service", path = "/goods")
+@FeignClient(value = "cloud-goods-service", path = "/goods")
 public interface GoodsServiceApiOpenFeign {
     @GetMapping(value = "/admin/goodsDetail")
     Result<GoodsDTO> getGoodsDetail(@RequestParam(value = "goodsId") Long goodsId);

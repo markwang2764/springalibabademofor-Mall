@@ -180,7 +180,7 @@ public class GoodsInfoController {
         if (sellStatus != 0 && sellStatus != 1) {
             return ResultGenerator.genFailResult("状态异常");
         }
-        if (goodsInfoService.BatchUpdateSellStatus(batchIdParam.getIds(), sellStatus)) {
+        if (goodsInfoService.batchUpdateSellStatus(batchIdParam.getIds(), sellStatus)) {
             return ResultGenerator.genSuccessResult();
         }
         return ResultGenerator.genFailResult("修改失败");

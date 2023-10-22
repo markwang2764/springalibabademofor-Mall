@@ -78,6 +78,7 @@ public interface RecommendIndexConfigDao {
     int deleteById(Long configId);
     RecommendIndexConfig selectByTypeAndGoodsId(@Param("configType") int configType, @Param("goodsId") Long goodsId);
     int insertSelective(RecommendIndexConfig record);
+    int deleteBatch(Long[] ids);
 
 }
 

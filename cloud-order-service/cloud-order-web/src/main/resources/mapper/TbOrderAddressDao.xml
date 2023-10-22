@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.user.web.dao.TbOrderAddressDao">
+
+    <resultMap type="cloud.user.web.entity.TbOrderAddress" id="TbOrderAddressMap">
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPhone" column="user_phone" jdbcType="VARCHAR"/>
+        <result property="provinceName" column="province_name" jdbcType="VARCHAR"/>
+        <result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+        <result property="regionName" column="region_name" jdbcType="VARCHAR"/>
+        <result property="detailAddress" column="detail_address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TbOrderAddressMap">
+        select
+          order_id, user_name, user_phone, province_name, city_name, region_name, detail_address
+        from tb_order_address
+        where order_id = #{orderId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TbOrderAddressMap">
+        select
+          order_id, user_name, user_phone, province_name, city_name, region_name, detail_address
+        from tb_order_address
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and user_phone = #{userPhone}
+            </if>
+            <if test="provinceName != null and provinceName != ''">
+                and province_name = #{provinceName}
+            </if>
+            <if test="cityName != null and cityName != ''">
+                and city_name = #{cityName}
+            </if>
+            <if test="regionName != null and regionName != ''">
+                and region_name = #{regionName}
+            </if>
+            <if test="detailAddress != null and detailAddress != ''">
+                and detail_address = #{detailAddress}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from tb_order_address
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and user_phone = #{userPhone}
+            </if>
+            <if test="provinceName != null and provinceName != ''">
+                and province_name = #{provinceName}
+            </if>
+            <if test="cityName != null and cityName != ''">
+                and city_name = #{cityName}
+            </if>
+            <if test="regionName != null and regionName != ''">
+                and region_name = #{regionName}
+            </if>
+            <if test="detailAddress != null and detailAddress != ''">
+                and detail_address = #{detailAddress}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="orderId" useGeneratedKeys="true">
+        insert into tb_order_address(user_name, user_phone, province_name, city_name, region_name, detail_address)
+        values (#{userName}, #{userPhone}, #{provinceName}, #{cityName}, #{regionName}, #{detailAddress})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="orderId" useGeneratedKeys="true">
+        insert into tb_order_address(user_name, user_phone, province_name, city_name, region_name, detail_address)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userName}, #{entity.userPhone}, #{entity.provinceName}, #{entity.cityName}, #{entity.regionName}, #{entity.detailAddress})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="orderId" useGeneratedKeys="true">
+        insert into tb_order_address(user_name, user_phone, province_name, city_name, region_name, detail_address)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.userPhone}, #{entity.provinceName}, #{entity.cityName}, #{entity.regionName}, #{entity.detailAddress})
+        </foreach>
+        on duplicate key update
+        user_name = values(user_name),
+        user_phone = values(user_phone),
+        province_name = values(province_name),
+        city_name = values(city_name),
+        region_name = values(region_name),
+        detail_address = values(detail_address)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update tb_order_address
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                user_phone = #{userPhone},
+            </if>
+            <if test="provinceName != null and provinceName != ''">
+                province_name = #{provinceName},
+            </if>
+            <if test="cityName != null and cityName != ''">
+                city_name = #{cityName},
+            </if>
+            <if test="regionName != null and regionName != ''">
+                region_name = #{regionName},
+            </if>
+            <if test="detailAddress != null and detailAddress != ''">
+                detail_address = #{detailAddress},
+            </if>
+        </set>
+        where order_id = #{orderId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from tb_order_address where order_id = #{orderId}
+    </delete>
+
+</mapper>
+

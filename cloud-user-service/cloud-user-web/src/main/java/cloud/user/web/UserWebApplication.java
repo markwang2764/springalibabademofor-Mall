@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @MapperScan("cloud.user.web.dao")
 @EnableWebMvc
 public class UserWebApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(UserWebApplication.class, args);
     }

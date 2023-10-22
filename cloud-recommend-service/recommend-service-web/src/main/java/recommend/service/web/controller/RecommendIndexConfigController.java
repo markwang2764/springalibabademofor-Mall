@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import recommend.service.web.config.annotation.TokenToAdminUser;
+import recommend.service.web.controller.param.BatchIdParam;
 import recommend.service.web.controller.param.IndexConfigAddParam;
 import recommend.service.web.entity.RecommendIndexConfig;
 import recommend.service.web.entity.UserAdmin;
@@ -118,12 +119,25 @@ public class RecommendIndexConfigController {
     /**
      * 删除数据
      *
-     * @param id 主键
+     * @param batchIdParam 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Long id) {
-        return ResponseEntity.ok(this.recommendIndexConfigService.deleteById(id));
+    @DeleteMapping("/batchDelete")
+    @ApiOperation(value = "批量删除首页配置项", notes = "新增首页配置项")
+    public Result<?> deleteByIds(
+            @RequestBody BatchIdParam batchIdParam,
+            @TokenToAdminUser UserAdmin userAdmin
+            ) {
+        logger.info("adminUser:{}", userAdmin.toString());
+        if (batchIdParam == null || batchIdParam.getIds().length < 1) {
+            return ResultGenerator.genFailResult("参数异常");
+        }
+        if (recommendIndexConfigService.deleteByIds(batchIdParam.getIds())) {
+            return ResultGenerator.genSuccessResult();
+        }
+        else{
+            return ResultGenerator.genFailResult("删除失败");
+        }
     }
 
 }

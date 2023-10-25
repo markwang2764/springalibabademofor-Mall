@@ -5,9 +5,11 @@ import cloud.common.springcloud.dto.PageResult;
 import cloud.common.springcloud.enums.ServiceResultEnum;
 import cloud.common.springcloud.util.MD5Util;
 import cloud.user.web.controller.param.MallUserUpdateParam;
+import cloud.user.web.mapper.MallUserMapper;
 import cloud.user.web.service.MallUserService;
 import cloud.user.web.entity.MallUser;
 import cloud.user.web.dao.MallUserDao;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +26,17 @@ import java.util.List;
 public class MallUserServiceImpl implements MallUserService {
     @Resource
     private MallUserDao mallUserDao;
+    @Resource
+    private MallUserMapper userMapper;
 
     @Resource
     private RedisTemplate redisTemplate;
 
     @Override
     public String register(String loginName, String password) {
-        if (mallUserDao.selectByLoginName(loginName) != null) {
+        QueryWrapper<MallUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("login_name", loginName);
+        if (userMapper.selectOne(queryWrapper)!=null) {
             return ServiceResultEnum.SAME_LOGIN_NAME_EXIST.getResult();
         }
         MallUser registerUser = new MallUser();
@@ -39,8 +45,10 @@ public class MallUserServiceImpl implements MallUserService {
         registerUser.setIntroduceSign("虽千万人，吾往矣");
         String passwordMD5 = MD5Util.MD5Encode(password,"UTF-8");
         registerUser.setPasswordMd5(passwordMD5);
-        if (mallUserDao.ins)
-        return null;
+        if (userMapper.insert(registerUser) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
     }
 
     @Override

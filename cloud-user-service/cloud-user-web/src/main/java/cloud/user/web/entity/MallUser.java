@@ -1,5 +1,6 @@
 package cloud.user.web.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @since 2023-10-19 21:25:04
  */
 @Data
+@TableName(value = "tb_mall_user")
 public class MallUser implements Serializable {
     private static final long serialVersionUID = -92764718783323538L;
     /**

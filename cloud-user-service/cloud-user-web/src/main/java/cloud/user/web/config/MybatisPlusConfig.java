@@ -1,4 +1,4 @@
-package goods.service.web.config;
+package cloud.user.web.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

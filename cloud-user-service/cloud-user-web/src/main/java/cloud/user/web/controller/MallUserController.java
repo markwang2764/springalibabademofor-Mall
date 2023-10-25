@@ -3,15 +3,22 @@ package cloud.user.web.controller;
 import cloud.common.springcloud.dto.PageQueryUtil;
 import cloud.common.springcloud.dto.Result;
 import cloud.common.springcloud.dto.ResultGenerator;
+import cloud.common.springcloud.enums.ServiceResultEnum;
+import cloud.common.springcloud.util.NumberUtil;
+import cloud.user.web.controller.param.MallUserRegisterParam;
 import cloud.user.web.service.MallUserService;
 import cloud.user.web.controller.param.BatchIdParam;
 import cloud.user.web.entity.MallUser;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +36,20 @@ public class MallUserController {
      */
     @Resource
     private MallUserService mallUserService;
+    private static final Logger logger = LoggerFactory.getLogger(MallUserController.class);
+    @PostMapping("/register")
+    @ApiOperation(value = "用户注册", notes = "用户注册")
+    public Result<?> register(@RequestBody @Valid MallUserRegisterParam mallUserRegisterParam) {
+        if (!NumberUtil.isPhone(mallUserRegisterParam.getLoginName())) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_IS_NOT_PHONE.getResult());
+        }
+        String registerResult = mallUserService.register(mallUserRegisterParam.getLoginName(), mallUserRegisterParam.getPassword());
+        logger.info("register api, loginName = {}, loginResult={}", mallUserRegisterParam.getLoginName(), registerResult);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
+            return ResultGenerator.genSuccessResult();
+        }
+        return ResultGenerator.genFailResult(registerResult);
+    }
 
     /**
      * 分页查询

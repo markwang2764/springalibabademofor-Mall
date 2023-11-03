@@ -1,9 +1,7 @@
 package cloud.order.web.service;
 
+import cloud.common.springcloud.dto.PageResult;
 import cloud.order.web.entity.TbOrderItem;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
 /**
  * (TbOrderItem)表服务接口
  *
@@ -24,10 +22,9 @@ public interface TbOrderItemService {
      * 分页查询
      *
      * @param tbOrderItem 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<TbOrderItem> queryByPage(TbOrderItem tbOrderItem, PageRequest pageRequest);
+    PageResult<?> queryByPage(TbOrderItem tbOrderItem);
 
     /**
      * 新增数据

@@ -1,8 +1,8 @@
 package cloud.order.web.service;
 
+import cloud.common.springcloud.dto.PageResult;
 import cloud.order.web.entity.TbOrderAddress;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 
 /**
  * 订单收货地址关联表(TbOrderAddress)表服务接口
@@ -24,10 +24,9 @@ public interface TbOrderAddressService {
      * 分页查询
      *
      * @param tbOrderAddress 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<TbOrderAddress> queryByPage(TbOrderAddress tbOrderAddress, PageRequest pageRequest);
+    PageResult<?> queryByPage(TbOrderAddress tbOrderAddress);
 
     /**
      * 新增数据

@@ -1,6 +1,7 @@
 package cloud.user.web.service;
 
 import cloud.user.web.entity.UserAdmin;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * @author makejava
  * @since 2023-09-06 12:35:54
  */
-public interface UserAdminService {
+public interface UserAdminService extends IService<UserAdmin> {
 
     /**
      * @Author: Mr.markwang 2764

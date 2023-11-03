@@ -2,7 +2,6 @@ package cloud.order.web.dao;
 
 import cloud.order.web.entity.TbOrderItem;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -26,10 +25,9 @@ public interface TbOrderItemDao {
      * 查询指定行数据
      *
      * @param tbOrderItem 查询条件
-     * @param pageable         分页对象
      * @return 对象列表
      */
-    List<TbOrderItem> queryAllByLimit(TbOrderItem tbOrderItem, @Param("pageable") Pageable pageable);
+    List<TbOrderItem> queryAllByLimit(TbOrderItem tbOrderItem);
 
     /**
      * 统计总行数

@@ -1,9 +1,9 @@
 package cloud.order.web.controller;
 
+import cloud.common.springcloud.dto.PageResult;
 import cloud.order.web.entity.TbOrderAddress;
 import cloud.order.web.service.TbOrderAddressService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +28,11 @@ public class TbOrderAddressController {
      * 分页查询
      *
      * @param tbOrderAddress 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<TbOrderAddress>> queryByPage(TbOrderAddress tbOrderAddress, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.tbOrderAddressService.queryByPage(tbOrderAddress, pageRequest));
+    public PageResult<?> queryByPage(TbOrderAddress tbOrderAddress) {
+        return null;
     }
 
     /**

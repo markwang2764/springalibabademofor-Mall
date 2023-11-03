@@ -1,11 +1,9 @@
 package cloud.order.web.service.impl;
 
+import cloud.common.springcloud.dto.PageResult;
 import cloud.order.web.dao.TbOrderItemDao;
 import cloud.order.web.entity.TbOrderItem;
 import cloud.order.web.service.TbOrderItemService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,13 +34,12 @@ public class TbOrderItemServiceImpl implements TbOrderItemService {
      * 分页查询
      *
      * @param tbOrderItem 筛选条件
-     * @param pageRequest      分页对象
      * @return 查询结果
      */
     @Override
-    public Page<TbOrderItem> queryByPage(TbOrderItem tbOrderItem, PageRequest pageRequest) {
+    public PageResult<?> queryByPage(TbOrderItem tbOrderItem) {
         long total = this.tbOrderItemDao.count(tbOrderItem);
-        return new PageImpl<>(this.tbOrderItemDao.queryAllByLimit(tbOrderItem, pageRequest), pageRequest, total);
+        return null;
     }
 
     /**

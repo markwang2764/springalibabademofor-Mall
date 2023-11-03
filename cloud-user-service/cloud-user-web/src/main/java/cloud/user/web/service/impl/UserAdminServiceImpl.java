@@ -5,14 +5,20 @@ import cloud.common.springcloud.util.NumberUtil;
 import cloud.common.springcloud.util.SystemUtil;
 import cloud.user.web.entity.UserAdmin;
 import cloud.user.web.dao.UserAdminDao;
+import cloud.user.web.mapper.UserAdminMapper;
 import cloud.user.web.service.UserAdminService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,11 +28,14 @@ import java.util.concurrent.TimeUnit;
  * @since 2023-09-06 12:35:54
  */
 @Service("userAdminService")
-public class UserAdminServiceImpl implements UserAdminService {
+public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserAdmin> implements UserAdminService {
     @Resource
     private UserAdminDao userAdminDao;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Resource
+    private UserAdminMapper userAdminMapper;
 
     /**
      * @Author: Mr.markwang 2764
@@ -34,8 +43,11 @@ public class UserAdminServiceImpl implements UserAdminService {
      * 登录
      */
     @Override
-    public String login(String userName, String passwrod) {
-        UserAdmin userAdmin = userAdminDao.login(userName, passwrod);
+    public String login(String userName, String password) {
+        UserAdmin userAdmin = userAdminMapper.selectOne(new LambdaQueryWrapper<UserAdmin>()
+                .eq(UserAdmin::getLoginUserName, userName)
+                .eq(UserAdmin::getLoginPassword, password)
+        );
         if (userAdmin != null){
             String token = getNewToken(System.currentTimeMillis()+"", userAdmin.getAdminUserId());
             AdminUserToken userToken = new AdminUserToken();

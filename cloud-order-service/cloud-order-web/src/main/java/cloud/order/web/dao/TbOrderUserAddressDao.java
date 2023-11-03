@@ -2,7 +2,6 @@ package cloud.order.web.dao;
 
 import cloud.order.web.entity.TbOrderUserAddress;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public interface TbOrderUserAddressDao {
      * @param pageable         分页对象
      * @return 对象列表
      */
-    List<TbOrderUserAddress> queryAllByLimit(TbOrderUserAddress tbOrderUserAddress, @Param("pageable") Pageable pageable);
+    List<TbOrderUserAddress> queryAllByLimit(TbOrderUserAddress tbOrderUserAddress);
 
     /**
      * 统计总行数

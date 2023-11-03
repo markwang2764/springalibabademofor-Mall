@@ -1,11 +1,10 @@
 package cloud.order.web.service.impl;
 
+import cloud.common.springcloud.dto.PageResult;
 import cloud.order.web.dao.TbOrderAddressDao;
 import cloud.order.web.entity.TbOrderAddress;
 import cloud.order.web.service.TbOrderAddressService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,6 +20,11 @@ public class TbOrderAddressServiceImpl implements TbOrderAddressService {
     @Resource
     private TbOrderAddressDao tbOrderAddressDao;
 
+    @Override
+    public PageResult<?> queryByPage(TbOrderAddress tbOrderAddress) {
+        return null;
+    }
+
     /**
      * 通过ID查询单条数据
      *
@@ -30,19 +34,6 @@ public class TbOrderAddressServiceImpl implements TbOrderAddressService {
     @Override
     public TbOrderAddress queryById(Long orderId) {
         return this.tbOrderAddressDao.queryById(orderId);
-    }
-
-    /**
-     * 分页查询
-     *
-     * @param tbOrderAddress 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
-    @Override
-    public Page<TbOrderAddress> queryByPage(TbOrderAddress tbOrderAddress, PageRequest pageRequest) {
-        long total = this.tbOrderAddressDao.count(tbOrderAddress);
-        return new PageImpl<>(this.tbOrderAddressDao.queryAllByLimit(tbOrderAddress, pageRequest), pageRequest, total);
     }
 
     /**

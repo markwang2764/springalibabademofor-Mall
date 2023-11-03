@@ -1,11 +1,9 @@
 package cloud.order.web.service.impl;
 
+import cloud.common.springcloud.dto.PageResult;
 import cloud.order.web.dao.TbOrderUserAddressDao;
 import cloud.order.web.entity.TbOrderUserAddress;
 import cloud.order.web.service.TbOrderUserAddressService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,17 +30,9 @@ public class TbOrderUserAddressServiceImpl implements TbOrderUserAddressService 
         return this.tbOrderUserAddressDao.queryById(addressId);
     }
 
-    /**
-     * 分页查询
-     *
-     * @param tbOrderUserAddress 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
     @Override
-    public Page<TbOrderUserAddress> queryByPage(TbOrderUserAddress tbOrderUserAddress, PageRequest pageRequest) {
-        long total = this.tbOrderUserAddressDao.count(tbOrderUserAddress);
-        return new PageImpl<>(this.tbOrderUserAddressDao.queryAllByLimit(tbOrderUserAddress, pageRequest), pageRequest, total);
+    public PageResult<?> queryByPage(TbOrderUserAddress tbOrderUserAddress) {
+        return null;
     }
 
     /**

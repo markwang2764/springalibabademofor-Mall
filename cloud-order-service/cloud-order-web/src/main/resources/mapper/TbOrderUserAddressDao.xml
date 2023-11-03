@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cloud.user.web.dao.TbOrderUserAddressDao">
+<mapper namespace="cloud.order.web.dao.TbOrderUserAddressDao">
 
-    <resultMap type="cloud.user.web.entity.TbOrderUserAddress" id="TbOrderUserAddressMap">
+    <resultMap type="cloud.order.web.entity.TbOrderUserAddress" id="TbOrderUserAddressMap">
         <result property="addressId" column="address_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>

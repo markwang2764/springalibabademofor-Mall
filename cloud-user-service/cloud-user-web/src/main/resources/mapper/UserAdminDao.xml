@@ -16,7 +16,7 @@
                login_user_name,
                login_password,
                nick_name,
-               locked from tb_user_admin
+               locked from tb_mall_admin_user
         where login_user_name = #{userName, jdbcType=VARCHAR} AND
               login_password = #{password, jdbcType=VARCHAR} AND
               locked = 0
@@ -29,7 +29,7 @@
                login_password,
                nick_name,
                locked
-        from tb_user_admin
+        from tb_mall_admin_user
         where admin_user_id = #{adminUserId}
     </select>
 
@@ -37,7 +37,7 @@
     <select id="queryAll" resultMap="UserAdminMap">
         select
         admin_user_id, login_user_name, login_password, nick_name, locked
-        from tb_user_admin
+        from tb_mall_admin_user
         <where>
             <if test="adminUserId != null">
                 and admin_user_id = #{adminUserId}
@@ -60,7 +60,7 @@
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)
-        from tb_user_admin
+        from tb_mall_admin_user
         <where>
             <if test="adminUserId != null">
                 and admin_user_id = #{adminUserId}
@@ -82,12 +82,12 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="adminUserId" useGeneratedKeys="true">
-        insert into tb_user_admin(login_user_name, login_password, nick_name, locked)
+        insert into tb_mall_admin_user(login_user_name, login_password, nick_name, locked)
         values (#{loginUserName}, #{loginPassword}, #{nickName}, #{locked})
     </insert>
 
     <insert id="insertBatch" keyProperty="adminUserId" useGeneratedKeys="true">
-        insert into tb_user_admin(login_user_name, login_password, nick_name, locked)
+        insert into tb_mall_admin_user(login_user_name, login_password, nick_name, locked)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.loginUserName}, #{entity.loginPassword}, #{entity.nickName}, #{entity.locked})
@@ -95,7 +95,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="adminUserId" useGeneratedKeys="true">
-        insert into tb_user_admin(login_user_name, login_password, nick_name, locked)
+        insert into tb_mall_admin_user(login_user_name, login_password, nick_name, locked)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.loginUserName}, #{entity.loginPassword}, #{entity.nickName}, #{entity.locked})
@@ -109,7 +109,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update tb_user_admin
+        update tb_mall_admin_user
         <set>
             <if test="loginUserName != null and loginUserName != ''">
                 login_user_name = #{loginUserName},
@@ -130,7 +130,7 @@
     <!--通过主键删除-->
     <delete id="deleteById">
         delete
-        from tb_user_admin
+        from tb_mall_admin_user
         where admin_user_id = #{adminUserId}
     </delete>
 

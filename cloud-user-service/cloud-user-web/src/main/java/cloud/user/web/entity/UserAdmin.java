@@ -1,5 +1,8 @@
 package cloud.user.web.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +11,8 @@ import java.io.Serializable;
  * @author makejava
  * @since 2023-09-06 12:35:54
  */
+@Data
+@TableName(value = "tb_mall_admin_user")
 public class UserAdmin implements Serializable {
     private static final long serialVersionUID = -88800142070642125L;
     /**
@@ -30,47 +35,5 @@ public class UserAdmin implements Serializable {
      * 是否锁定 0未锁定 1已锁定无法登录
      */
     private Integer locked;
-
-
-    public Long getAdminUserId() {
-        return adminUserId;
-    }
-
-    public void setAdminUserId(Long adminUserId) {
-        this.adminUserId = adminUserId;
-    }
-
-    public String getLoginUserName() {
-        return loginUserName;
-    }
-
-    public void setLoginUserName(String loginUserName) {
-        this.loginUserName = loginUserName;
-    }
-
-    public String getLoginPassword() {
-        return loginPassword;
-    }
-
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public Integer getLocked() {
-        return locked;
-    }
-
-    public void setLocked(Integer locked) {
-        this.locked = locked;
-    }
-
 }
 
